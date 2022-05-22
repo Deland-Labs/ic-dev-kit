@@ -112,7 +112,7 @@ class IdentityFactory {
     };
 
     loadAllIdentities() {
-        let identityNames = manager.getIdentityPemNames();
+        let identityNames = this.getIdentityPemNames();
         if (identityNames.length == 0) {
             logger.info("There is no identity need to be import");
             return;

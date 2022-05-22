@@ -1,6 +1,6 @@
 import fs from "fs";
 import archiver from "archiver";
-import { DfxJsonCanister, DfxPackageEnv, get_dfx_json, get_dfx_package_json, get_wasm_path } from "~/utils/dfxJson";
+import { DfxJsonCanister, DfxPackageEnv, get_dfx_json, get_dfx_package_json, get_wasm_path } from "../src/dfxJson"
 import { canister } from "~/utils";
 import logger from "node-color-log";
 
