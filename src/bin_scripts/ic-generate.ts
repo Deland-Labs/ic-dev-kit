@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {exec} from "shelljs";
 import logger from "node-color-log";
 import {get_dfx_json} from "../src/dfxJson";

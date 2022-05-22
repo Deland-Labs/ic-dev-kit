@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {canister} from "../src";
 
 (async () => {
