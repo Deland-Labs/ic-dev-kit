@@ -1,0 +1,36 @@
+{
+  "name": "ic-dev-kit",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deland-Labs/ic-dev-kit.git"
+  },
+  "keywords": [
+    "ic"
+  ],
+  "author": "Deland-Labs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Deland-Labs/ic-dev-kit/issues"
+  },
+  "homepage": "https://github.com/Deland-Labs/ic-dev-kit#readme",
+  "dependencies":{
+    "@dfinity/agent": "^0.11.0",
+    "@dfinity/authentication": "^0.11.0",
+    "@dfinity/candid": "^0.11.0",
+    "@dfinity/identity": "^0.11.0",
+    "@dfinity/principal": "^0.11.0",
+    "node-color-log": "^9.0.0",
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "ts-node": "^10.8.0",
+    "tsconfig-paths": "^4.0.0",
+    "typescript": "^4.6.4"
+  }
+}
