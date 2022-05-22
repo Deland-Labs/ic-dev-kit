@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "target": "es2021",
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "es2017",
+      "es2020.bigint"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["./src/src"]
+    }
+  },
+  "include": [
+    "src/src/**/*.ts",
+    "src/bin/**/*.ts",
+    "src/*.ts"
+ ],
+  "exclude": [
+    "node_modules/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*"
+  ],
+  // Most ts-node options can be specified here using their programmatic names.
+  "ts-node": {
+    // It is faster to skip typechecking.
+    // Remove if you want ts-node to do typechecking.
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      "experimentalDecorators": true,
+    }
+  }
+}

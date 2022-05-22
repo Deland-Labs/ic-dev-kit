@@ -19,16 +19,31 @@
     "url": "https://github.com/Deland-Labs/ic-dev-kit/issues"
   },
   "homepage": "https://github.com/Deland-Labs/ic-dev-kit#readme",
-  "dependencies":{
+  "directories": {
+    "bin": "src/bins"
+  },
+  "dependencies": {
     "@dfinity/agent": "^0.11.0",
     "@dfinity/authentication": "^0.11.0",
     "@dfinity/candid": "^0.11.0",
     "@dfinity/identity": "^0.11.0",
     "@dfinity/principal": "^0.11.0",
+    "@trust/webcrypto": "^0.9.2",
+    "archiver": "^5.3.1",
+    "bignumber.js": "^9.0.2",
+    "crc": "^4.1.1",
+    "js-sha256": "^0.9.0",
     "node-color-log": "^9.0.0",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "sha256": "^0.2.0",
+    "shelljs": "^0.8.5",
+    "text-encoding": "^0.7.0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "eslint": "^8.16.0",
+    "eslint-config-google": "^0.14.0",
     "ts-node": "10.8.0",
     "tsconfig-paths": "4.0.0",
     "typescript": "4.6.4"
