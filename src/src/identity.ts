@@ -196,6 +196,10 @@ export class IdentityFactory {
     };
 
     getIdentityPemNames(): string[] {
+        if (!fs.existsSync(this._configuration.pem_source_dir)){
+            logger.debug("pem source dir not exist");
+            return [];
+        }
         return fs.readdirSync(this._configuration.pem_source_dir)
             .filter(file => file.endsWith(".pem"))
             .map(file => file.replace(".pem", ""));
