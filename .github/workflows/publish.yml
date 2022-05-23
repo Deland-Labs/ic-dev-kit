@@ -17,11 +17,11 @@ jobs:
           yarn install --frozen-lockfile
       - run: |
           npm config set always-auth true
-          npm config set registry ${REGISTRY}
+          npm config set registry https:${REGISTRY}
           npm config set ${REGISTRY}:_authToken ${{ secrets.MY_GET_TOKEN }}
-          npm config set @deland-labs:registry ${REGISTRY}
+          npm config set @deland-labs:registry https:{REGISTRY}
         env: 
-          REGISTRY: https://www.myget.org/F/ic-feed/npm/
+          REGISTRY: //www.myget.org/F/ic-feed/npm/
       - run: | 
           Version=$(git describe --tags --abbrev=0)
           yarn publish --frozen-lockfile --non-interactive --no-git-tag-version --no-commit-hooks --new-version ${Version}
