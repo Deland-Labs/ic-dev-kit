@@ -17,7 +17,9 @@ jobs:
           cache: yarn
       - run: | 
           yarn install --frozen-lockfile
-          # npm config set registry https://www.myget.org/F/deland-labs/npm/
+          npm config set //www.myget.org/F/deland-labs/npm/:_authToken ${{ secrets.MY_GET_TOKEN }}
+          npm config set always-auth true
           npm config set @deland-labs:registry https://www.myget.org/F/deland-labs/npm/
-          echo "https://www.myget.org/F/deland-labs/npm/:_authToken=${{ secrets.MY_GET_TOKEN }}" > ~/.npmrc
-          yarn publish
+          yarn publish --patch --non-interactive --registry ${REGISTRY}
+        env:
+          REGISTRY: https://www.myget.org/F/deland-labs/npm/
