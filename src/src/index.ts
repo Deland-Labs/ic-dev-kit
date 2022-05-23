@@ -19,3 +19,15 @@ import * as unit2 from "./unit";
 export const unit = {
     ...unit2
 }
+import * as icBuildAll from "../bin_scripts/ic-build-all";
+import * as icGenerate from "../bin_scripts/ic-generate";
+import * as icInitIdentity from "../bin_scripts/ic-init-identity";
+import * as icPack from "../bin_scripts/ic-pack";
+import * as icUpdateDid from "../bin_scripts/ic-update-did";
+export const tasks = {
+    ...icBuildAll,
+    ...icGenerate,
+    ...icInitIdentity,
+    ...icPack,
+    ...icUpdateDid
+}

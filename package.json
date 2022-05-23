@@ -1,6 +1,6 @@
 {
   "name": "@deland-labs/ic-dev-kit",
-  "version": "0.0.30",
+  "version": "0.0.36",
   "description": "",
   "types": "dist/src/index.d.ts",
   "main": "dist/src/index.js",
@@ -38,8 +38,8 @@
     "ic-build-all": "./bins/ic-build-all.js",
     "ic-generate": "./bins/ic-generate.js",
     "ic-init-identity": "./bins/ic-init-identity.js",
-    "ic-pack": "./bins/ic-pack-all.js",
-    "ic-udpate-did": "./bins/ic-update-did.js"
+    "ic-pack": "./bins/ic-pack.js",
+    "ic-update-did": "./bins/ic-update-did.js"
   },
   "dependencies": {
     "@dfinity/agent": "^0.11.0",

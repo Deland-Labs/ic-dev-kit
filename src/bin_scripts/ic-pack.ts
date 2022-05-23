@@ -179,7 +179,7 @@ interface BuildContext {
     canister_envs: string[]
 }
 
-(async () => {
+export const execute_task_pack = async () => {
     const dfxJson = get_dfx_json();
     const dfxPackageJson = get_dfx_package_json();
     // join canisters keys as string
@@ -214,7 +214,4 @@ interface BuildContext {
     await check(build_context);
     await create(build_context);
     await create_zip(build_context);
-
-})().then(() => {
-    logger.debug("Package created successfully");
-})
+}
