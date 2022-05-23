@@ -18,7 +18,7 @@ jobs:
       - run: |
           npm config set always-auth true
           npm config set registry ${REGISTRY}
-          npm config set ${${REGISTRY}}:_authToken ${{ secrets.MY_GET_TOKEN }}
+          npm config set ${REGISTRY}:_authToken ${{ secrets.MY_GET_TOKEN }}
           npm config set @deland-labs:registry ${REGISTRY}
         env: 
           REGISTRY: https://www.myget.org/F/ic-feed/npm/
