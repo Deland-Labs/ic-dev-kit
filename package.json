@@ -2,11 +2,18 @@
   "name": "ic-dev-kit",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "source": "src/src/index.ts",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.esm.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "prepublish": "tsc"
+    "prepare": "husky install",
+    "test": "lint-staged && jest",
+    "pack-dist": "rm -rf dist/  &&  parcel build",
+    "pack-docs": "rm -rf docs/  &&  typedoc src/",
+    "build": "npm run pack-dist  &&  npm run pack-docs",
+    "prepublishOnly": "npm test  &&  npm run build",
+    "start": "npm run pack-docs  &&  open-cli docs/index.html"
   },
   "repository": {
     "type": "git",
@@ -34,6 +41,9 @@
     "archiver": "^5.3.1",
     "bignumber.js": "^9.0.2",
     "crc": "^4.1.1",
+    "parcel": "^2.5.0",
+    "typedoc": "^0.22.15",
+    "typedoc-plugin-mdn-links": "^1.0.6",
     "js-sha256": "^0.9.0",
     "node-color-log": "^9.0.0",
     "node-fetch": "^2.6.7",
