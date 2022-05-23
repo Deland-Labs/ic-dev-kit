@@ -19,7 +19,7 @@
     "url": "git://github.com/Deland-Labs/ic-dev-kit.git"
   },
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
+    "registry":"https://www.myget.org/F/deland-labs/npm/"
   },
   "keywords": [
     "ic"
