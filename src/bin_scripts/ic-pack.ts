@@ -214,4 +214,6 @@ export const execute_task_pack = async () => {
     await check(build_context);
     await create(build_context);
     await create_zip(build_context);
+
+    logger.info("execute_task_pack done");
 }

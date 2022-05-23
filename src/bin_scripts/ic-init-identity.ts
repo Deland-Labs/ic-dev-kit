@@ -12,5 +12,7 @@ export const execute_task_init_identity = () => {
     canister.addMainAsController()
         .then(() => {
             logger.info("Main controller added");
-        })
+        });
+
+    logger.info("execute_task_init_identity done");
 }

@@ -29,4 +29,6 @@ export const execute_task_generate = async () => {
         // remove ./src/declarations/*
         await exec(`rm -rf ./src/declarations/*`);
     }
+
+    logger.info("execute_task_generate done");
 }

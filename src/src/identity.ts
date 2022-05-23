@@ -207,7 +207,6 @@ export class IdentityFactory {
             return [];
         }
         const files = fs.readdirSync(source_dir);
-        logger.debug(`pem source dir ${source_dir} has ${files.length} files`);
         return files
             .filter(file => file.endsWith(".pem"))
             .map(file => file.replace(".pem", ""));

@@ -44,4 +44,6 @@ export const execute_task_update_did = async () => {
             logger.error(`${name} : ${e}`);
         }
     }
+
+    logger.info("execute_task_update_did done");
 }
