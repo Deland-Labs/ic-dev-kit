@@ -15,8 +15,9 @@ jobs:
           node-version: 16
           registry-url: https://npm.pkg.github.com
           cache: yarn
-      - run: yarn install --frozen-lockfile
-      - run: echo "//www.myget.org/F/ic-feed/npm/:_authToken=${{ secrets.MY_GET_TOKEN }}" > ~/.npmrc
-      - run: yarn publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.MY_GET_TOKEN }}
+      - run: | 
+          yarn install --frozen-lockfile
+          # npm config set registry https://www.myget.org/F/deland-labs/npm/
+          npm config set @deland-labs:registry https://www.myget.org/F/deland-labs/npm/
+          echo "https://www.myget.org/F/deland-labs/npm/:_authToken=${{ secrets.MY_GET_TOKEN }}" > ~/.npmrc
+          yarn publish
