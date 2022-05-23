@@ -1,14 +1,14 @@
 {
-  "name": "@Deland-Labs/ic-dev-kit",
-  "version": "0.0.2",
+  "name": "@deland-labs/ic-dev-kit",
+  "version": "0.0.4",
   "description": "",
   "source": "src/src/index.ts",
   "types": "dist/index.d.ts",
-  "module": "dist/index.esm.js",
+  "module": "dist/index.js",
   "main": "dist/index.js",
   "scripts": {
     "test": "lint-staged",
-    "pack-dist": "rm -rf dist/  &&  parcel build",
+    "pack-dist": "rm -rf dist/  &&  tsc",
     "pack-docs": "rm -rf docs/  &&  typedoc src/src/",
     "build": "npm run pack-dist  &&  npm run pack-docs",
     "prepublishOnly": "npm test  &&  npm run build",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/Deland-Labs/ic-dev-kit.git"
+    "url": "git+https://github.com/Deland-Labs/ic-dev-kit.git"
   },
   "keywords": [
     "ic"
@@ -43,7 +43,6 @@
     "js-sha256": "^0.9.0",
     "node-color-log": "^9.0.0",
     "node-fetch": "^2.6.7",
-    "parcel": "^2.5.0",
     "sha256": "^0.2.0",
     "shelljs": "^0.8.5",
     "text-encoding": "^0.7.0"
