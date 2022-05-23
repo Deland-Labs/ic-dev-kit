@@ -74,7 +74,7 @@ export interface IdentityInfo {
 
 const DEFAULT_HOST = "http://127.0.0.1:8000";
 
-class IdentityFactory {
+export class IdentityFactory {
     private _identities: Map<string, IdentityInfo>;
     private _configuration: ICDevKitConfigurationIdentitySection;
 

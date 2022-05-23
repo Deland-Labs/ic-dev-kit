@@ -23,6 +23,13 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
   },
+  "typedocOptions": {
+    "name": "IC Dev Kit",
+    "excludeExternals": true,
+    "excludePrivate": true,
+    "readme": "./ReadMe.md",
+    "out": "docs/"
+  },
   "include": [
     "src"
  ],
