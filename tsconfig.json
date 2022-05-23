@@ -10,8 +10,9 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "outDir": "./lib",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -20,31 +21,15 @@
     "isolatedModules": true,
     "noEmit": true,
     "experimentalDecorators": true,
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["./src/src"]
-    }
+    "esModuleInterop": true,
   },
   "include": [
-    "src/src/**/*.ts",
-    "src/bin/**/*.ts",
-    "src/*.ts"
+    "src"
  ],
   "exclude": [
     "node_modules/**/*",
     ".webpack/**/*",
     "_warmup/**/*",
     ".vscode/**/*"
-  ],
-  // Most ts-node options can be specified here using their programmatic names.
-  "ts-node": {
-    // It is faster to skip typechecking.
-    // Remove if you want ts-node to do typechecking.
-    "transpileOnly": true,
-    "files": true,
-    "compilerOptions": {
-      "module": "commonjs",
-      "experimentalDecorators": true,
-    }
-  }
+  ]
 }
