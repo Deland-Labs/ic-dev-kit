@@ -23,7 +23,7 @@ const download_did = async (canister) => {
     return did_content;
 };
 
-(async () => {
+export const execute_task_update_did = async () => {
     let dfxJson = dfxJsonManager.get_dfx_json();
     for (const [name, config] of dfxJson.canisters.entries()) {
         if (config.pack_config?.exclude_in_package == true) {
@@ -44,6 +44,6 @@ const download_did = async (canister) => {
             logger.error(`${name} : ${e}`);
         }
     }
-})().then(() => {
-    logger.info("Did update complete");
-});
+
+    logger.info("execute_task_update_did done");
+}

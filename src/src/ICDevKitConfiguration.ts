@@ -1,9 +1,9 @@
 import fs from "fs";
 import logger from "node-color-log";
 
-export const DEFAULT_PEM_SOURCE_DIR = './ic-dev-kit/pem';
+export const DEFAULT_PEM_SOURCE_DIR = './ic-dev-kit/pem/';
 export const DEFAULT_IDENTITY_NAME = "default";
-export const DEFAULT_DECLARATIONS_OUT_DIR = "./src/declarations";
+export const DEFAULT_DECLARATIONS_OUT_DIR = "./src/declarations/";
 
 export interface ICDevKitConfigurationIdentitySection {
     pem_source_dir: string;
@@ -32,15 +32,12 @@ export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
     };
     try {
         config = JSON.parse(fs.readFileSync('./ic-dev-kit.json').toString());
+        // TODO how to merge?
         config = {...default_config, ...config};
     } catch (e) {
         logger.info('No config file found, using default configuration');
-        config = {
-            identity: {
-                pem_source_dir: DEFAULT_PEM_SOURCE_DIR,
-                default_identity: DEFAULT_IDENTITY_NAME
-            },
-        };
+        config = default_config;
     }
+    logger.debug(`Loaded configuration: ${JSON.stringify(config, null, 2)}`);
     return config as ICDevKitConfiguration;
 };
