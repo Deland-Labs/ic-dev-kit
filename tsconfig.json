@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "target": "es2021",
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "es2017",
+      "es2020.bigint"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+  },
+  "typedocOptions": {
+    "name": "IC Dev Kit",
+    "excludeExternals": true,
+    "excludePrivate": true,
+    "readme": "./ReadMe.md",
+    "out": "docs/"
+  },
+  "include": [
+    "src"
+ ],
+  "exclude": [
+    "node_modules/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*"
+  ]
+}
