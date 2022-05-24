@@ -40,6 +40,11 @@ export const deleteDfxIdentity = (name: string) => {
     exec(`dfx identity remove ${name}`, { silent: true });
 };
 
+export const getDfxPrincipal = (): string => {
+    let result = exec(`dfx identity get-principal`, { silent: true });
+    return result.trim();
+}
+
 export interface agentOptions {
     host: string;
     identity: Identity;
@@ -214,6 +219,20 @@ export class IdentityFactory {
 
     getDefaultIdentityName(): string {
         return this._configuration.default_identity;
+    }
+
+    printIdentitys() {
+        let content = "principal:\n";
+        for (const [key, value] of this._identities) {
+            content += `# ${key} node\n`;
+            content += `${value.identity.getPrincipal().toString()}\n`;
+            content += `# ${key} dfx\n`;
+            useDfxIdentity(key);
+            content += `${getDfxPrincipal()}\n`
+        }
+        logger.info(content);
+        logger.info("swicth identity to default")
+        useDfxIdentity("default");
     }
 }
 

@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
         "dfinity"
-    ]
+    ],
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "file:///workspace/ic-dev-kit/.github/workflows/build.yml"
+    }
 }

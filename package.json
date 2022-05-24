@@ -39,7 +39,8 @@
     "ic-generate": "./bins/ic-generate.js",
     "ic-init-identity": "./bins/ic-init-identity.js",
     "ic-pack": "./bins/ic-pack.js",
-    "ic-update-did": "./bins/ic-update-did.js"
+    "ic-update-did": "./bins/ic-update-did.js",
+    "ic-show-principal": "./bins/ic-show-principal.js"
   },
   "dependencies": {
     "@dfinity/agent": "^0.11.0",
