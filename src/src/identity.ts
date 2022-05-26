@@ -1,12 +1,16 @@
-import { exec } from "shelljs";
-import { Identity } from "@dfinity/agent";
+import {exec} from "shelljs";
+import {Identity} from "@dfinity/agent";
 import * as fs from "fs";
-import { Secp256k1KeyIdentity } from "@dfinity/identity";
+import {Secp256k1KeyIdentity} from "@dfinity/identity";
 import sha256 from "sha256";
-import { principalToAccountIDInBytes, toHexString } from "./utils";
-import { Principal } from "@dfinity/principal";
+import {principalToAccountIDInBytes, toHexString} from "./utils";
+import {Principal} from "@dfinity/principal";
 import logger from "node-color-log";
-import { ICDevKitConfigurationIdentitySection, LoadICDevKitConfiguration } from "./ICDevKitConfiguration";
+import {
+    DEFAULT_IDENTITY_NAME,
+    ICDevKitConfigurationIdentitySection,
+    LoadICDevKitConfiguration
+} from "./ICDevKitConfiguration";
 
 function get_pem_path(name: string): string {
     // get current home directory
@@ -27,21 +31,21 @@ function load(name: string): Identity {
     // @ts-ignore
     const rawBuffer = Uint8Array.from(rawKey).buffer;
 
-    const privKey = Uint8Array.from(sha256(rawKey, { asBytes: true }));
+    const privKey = Uint8Array.from(sha256(rawKey, {asBytes: true}));
     // Initialize an identity from the secret key
     return Secp256k1KeyIdentity.fromSecretKey(Uint8Array.from(privKey).buffer);
 }
 
 export const useDfxIdentity = (name: string) => {
-    exec(`dfx identity use ${name}`, { silent: true });
+    exec(`dfx identity use ${name}`, {silent: true});
 };
 
 export const deleteDfxIdentity = (name: string) => {
-    exec(`dfx identity remove ${name}`, { silent: true });
+    exec(`dfx identity remove ${name}`, {silent: true});
 };
 
 export const getDfxPrincipal = (): string => {
-    let result = exec(`dfx identity get-principal`, { silent: true });
+    let result = exec(`dfx identity get-principal`, {silent: true});
     return result.trim();
 }
 
@@ -81,22 +85,12 @@ export class IdentityFactory {
         this._identities.set(name, identityInfo);
     };
 
-    new_identity = (name: string) => {
-        {
-            let result = exec(`dfx identity new ${name}`, { silent: false });
-            if (result.code !== 0) {
-                if (result.stderr.trim().endsWith("Error: Identity already exists.")) {
-                    logger.debug(`identity for ${name} already created`);
-                } else {
-                    logger.error(result.stderr);
-                    throw new Error(`Failed to create new identity ${name}`);
-                }
-            }
-        }
+    import_identity = (name: string) => {
+        this.new_identity(name);
         // override static key file from scripts/identity_pem/${name}/identity.pem
         let target_pem_path = get_pem_path(name);
         {    // chmod 777 for target_pem_path
-            let result = exec(`chmod 777 ${target_pem_path}`, { silent: false });
+            let result = exec(`chmod 777 ${target_pem_path}`, {silent: false});
             if (result.code !== 0) {
 
                 logger.error(result.stderr);
@@ -105,6 +99,18 @@ export class IdentityFactory {
         }
         let source_pem_path = `${this._configuration.pem_source_dir}/${name}.pem`;
         fs.copyFileSync(source_pem_path, target_pem_path);
+    }
+
+    new_identity = (name: string) => {
+        let result = exec(`dfx identity new ${name}`, {silent: false});
+        if (result.code !== 0) {
+            if (result.stderr.trim().endsWith("Error: Identity already exists.")) {
+                logger.debug(`identity for ${name} already created`);
+            } else {
+                logger.error(result.stderr);
+                throw new Error(`Failed to create new identity ${name}`);
+            }
+        }
     }
 
     deleteIdentityInfo = (name: string) => {
@@ -122,11 +128,16 @@ export class IdentityFactory {
     };
 
     loadAllIdentities() {
+
         let identityNames = this.getIdentityPemNames();
         if (identityNames.length == 0) {
-            logger.info("There is no identity need to be import");
-            return;
+            logger.info("There is no identity need to be import, use default identity");
+            this.new_identity(DEFAULT_IDENTITY_NAME);
         }
+        if (!identityNames.includes(DEFAULT_IDENTITY_NAME)) {
+            identityNames.push(DEFAULT_IDENTITY_NAME);
+        }
+
         let should_create_identities = false;
         for (const identity_name of identityNames) {
             const pem_path = get_pem_path(identity_name);
@@ -139,11 +150,12 @@ export class IdentityFactory {
             logger.info("Creating identities...");
 
             for (const identity_name of identityNames) {
-                this.new_identity(identity_name);
+                this.import_identity(identity_name);
             }
         } else {
             logger.info("Identities already exist");
         }
+        // always load default identity
         identityNames.forEach(this.loadIdentityInfo);
 
         // force to default identity in case of missing controller to local canisters when exec dfx
@@ -221,7 +233,7 @@ export class IdentityFactory {
         return this._configuration.default_identity;
     }
 
-    printIdentitys() {
+    printIdentity() {
         let content = "principal:\n";
         for (const [key, value] of this._identities) {
             content += `# ${key} node\n`;
@@ -231,7 +243,7 @@ export class IdentityFactory {
             content += `${getDfxPrincipal()}\n`
         }
         logger.info(content);
-        logger.info("swicth identity to default")
+        logger.info("switch identity to default")
         useDfxIdentity("default");
     }
 }

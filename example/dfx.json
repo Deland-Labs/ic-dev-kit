@@ -1,0 +1,32 @@
+{
+  "canisters": {
+    "one_way_hoster": {
+      "type": "rust",
+      "package": "one_way_hoster",
+      "candid": "canisters/one_way_hoster/src/one_way_hoster.did"
+    },
+    "one_way_caller": {
+      "type": "rust",
+      "package": "one_way_caller",
+      "candid": "canisters/one_way_caller/src/one_way_caller.did"
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": ""
+    }
+  },
+  "networks": {
+    "ic": {
+      "providers": [
+        "https://ic0.app"
+      ],
+      "type": "persistent"
+    },
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}

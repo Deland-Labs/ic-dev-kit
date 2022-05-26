@@ -1,0 +1,21 @@
+[package]
+name = "one_way_caller"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+ic-cdk = "0.4.0"
+ic-cdk-macros = "0.4.0"
+candid = "0.7.12"
+serde = "1.0.136"
+serde_bytes = "0.11"
+log = "0.4"
+
+[dev-dependencies]
+env_logger = "0.9.0"
+rstest = "0.12.0"

@@ -1,0 +1,10 @@
+{
+  "canisters": {
+  },
+  "envs": [
+    {
+      "name": "dev",
+      "canister_env": "dev"
+    }
+  ]
+}

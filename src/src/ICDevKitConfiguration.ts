@@ -1,9 +1,12 @@
 import fs from "fs";
 import logger from "node-color-log";
 
+export const IC_DEV_KIT_CONFIGURATION_FILE_NAME = "ic-dev-kit.json";
+
 export const DEFAULT_PEM_SOURCE_DIR = './ic-dev-kit/pem/';
 export const DEFAULT_IDENTITY_NAME = "default";
 export const DEFAULT_DECLARATIONS_OUT_DIR = "./src/declarations/";
+export const DEFAULT_PACKAGE_SCOPE = "ic";
 
 export interface ICDevKitConfigurationIdentitySection {
     pem_source_dir: string;
@@ -14,9 +17,14 @@ export interface ICDevKitConfigurationCanisterSection {
     declarations_out_dir: string;
 }
 
+export interface ICDevKitConfigurationPackSection {
+    package_scope: string;
+}
+
 export interface ICDevKitConfiguration {
     identity: ICDevKitConfigurationIdentitySection;
     canister: ICDevKitConfigurationCanisterSection;
+    pack: ICDevKitConfigurationPackSection;
 }
 
 export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
@@ -28,10 +36,13 @@ export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
         },
         canister: {
             declarations_out_dir: DEFAULT_DECLARATIONS_OUT_DIR
+        },
+        pack: {
+            package_scope: DEFAULT_PACKAGE_SCOPE
         }
     };
     try {
-        config = JSON.parse(fs.readFileSync('./ic-dev-kit.json').toString());
+        config = JSON.parse(fs.readFileSync(IC_DEV_KIT_CONFIGURATION_FILE_NAME).toString());
         // TODO how to merge?
         config = {...default_config, ...config};
     } catch (e) {
@@ -41,3 +52,6 @@ export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
     logger.debug(`Loaded configuration: ${JSON.stringify(config, null, 2)}`);
     return config as ICDevKitConfiguration;
 };
+
+
+export const icDevKitConfiguration = LoadICDevKitConfiguration();

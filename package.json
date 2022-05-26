@@ -6,7 +6,7 @@
   "main": "dist/src/index.js",
   "scripts": {
     "test": "lint-staged",
-    "pack-dist": "rm -rf dist/  && tsc",
+    "pack-dist": "rm -rf dist/  && npx tsc",
     "pack-docs": "rm -rf docs/  && typedoc src/src/",
     "build": "npm run pack-dist  &&  npm run pack-docs",
     "prepublishOnly": "npm test  &&  npm run build",
@@ -20,7 +20,8 @@
     "dist",
     "src",
     "docs",
-    "bins"
+    "bins",
+    "templates"
   ],
   "keywords": [
     "ic"
@@ -39,6 +40,7 @@
     "ic-generate": "./bins/ic-generate.js",
     "ic-init-identity": "./bins/ic-init-identity.js",
     "ic-pack": "./bins/ic-pack.js",
+    "ic-init": "./bins/ic-init.js",
     "ic-update-did": "./bins/ic-update-did.js",
     "ic-show-principal": "./bins/ic-show-principal.js"
   },
@@ -60,9 +62,7 @@
     "text-encoding": "^0.7.0"
   },
   "devDependencies": {
-    "@parcel/packager-ts": "2.5.0",
     "@parcel/transformer-typescript-types": "2.5.0",
-    "@semantic-release/github": "^8.0.4",
     "@types/sha256": "^0.2.0",
     "@types/shelljs": "^0.8.11",
     "@typescript-eslint/eslint-plugin": "5.26.0",
@@ -73,7 +73,6 @@
     "jest-localstorage-mock": "^2.4.21",
     "lint-staged": "12.4.2",
     "open-cli": "^7.0.1",
-    "semantic-release": "^19.0.2",
     "ts-jest": "28.0.3",
     "typedoc": "^0.22.15",
     "typedoc-plugin-mdn-links": "^1.0.6",

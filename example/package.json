@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@deland-labs/ic-dev-kit": "file:.."
+  }
+}
