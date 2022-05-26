@@ -8,7 +8,7 @@
     "test": "lint-staged",
     "pack-dist": "rm -rf dist/  && npx tsc",
     "pack-docs": "rm -rf docs/  && typedoc src/src/",
-    "build": "npm run pack-dist  &&  npm run pack-docs",
+    "build": "npm run pack-dist",
     "prepublishOnly": "npm test  &&  npm run build",
     "start": "npm run pack-docs  &&  open-cli docs/index.html"
   },
@@ -60,6 +60,9 @@
     "sha256": "^0.2.0",
     "shelljs": "^0.8.5",
     "text-encoding": "^0.7.0"
+  },
+  "peerDependencies": {
+    "@deland-labs/ic-bin-tools": "0.1.1"
   },
   "devDependencies": {
     "@types/sha256": "^0.2.0",

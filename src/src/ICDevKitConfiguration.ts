@@ -5,8 +5,10 @@ export const IC_DEV_KIT_CONFIGURATION_FILE_NAME = "ic-dev-kit.json";
 
 export const DEFAULT_PEM_SOURCE_DIR = './ic-dev-kit/pem/';
 export const DEFAULT_IDENTITY_NAME = "default";
-export const DEFAULT_DECLARATIONS_OUT_DIR = "./src/declarations/";
 export const DEFAULT_PACKAGE_SCOPE = "ic";
+export const DEFAULT_BUILD_ENV_NAME = "CANISTER_ENV";
+export const DEFAULT_PRODUCTION_ENV = "production";
+export const DEFAULT_DECLARATIONS_OUT_DIR = "./src/declarations/";
 
 export interface ICDevKitConfigurationIdentitySection {
     pem_source_dir: string;
@@ -14,6 +16,8 @@ export interface ICDevKitConfigurationIdentitySection {
 }
 
 export interface ICDevKitConfigurationCanisterSection {
+    build_env_name: string;
+    production_env: string;
     declarations_out_dir: string;
 }
 
@@ -35,6 +39,8 @@ export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
             default_identity: DEFAULT_IDENTITY_NAME
         },
         canister: {
+            build_env: DEFAULT_BUILD_ENV_NAME,
+            production_env: DEFAULT_PRODUCTION_ENV,
             declarations_out_dir: DEFAULT_DECLARATIONS_OUT_DIR
         },
         pack: {
@@ -44,7 +50,7 @@ export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
     try {
         config = JSON.parse(fs.readFileSync(IC_DEV_KIT_CONFIGURATION_FILE_NAME).toString());
         // TODO how to merge?
-        config = {...default_config, ...config};
+        config = { ...default_config, ...config };
     } catch (e) {
         logger.info('No config file found, using default configuration');
         config = default_config;

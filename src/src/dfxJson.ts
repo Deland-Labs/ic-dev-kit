@@ -59,8 +59,8 @@ export interface DfxPackageJson {
 
 export interface DfxPackageCanister {
     exclude_in_package?: boolean;
-    copy_ts_declarations?: boolean;
     pack_npm_client?: boolean;
+    pack_npm_server?: boolean;
 }
 
 export interface DfxPackageEnv {

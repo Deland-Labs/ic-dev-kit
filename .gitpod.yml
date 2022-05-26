@@ -3,6 +3,7 @@ tasks:
   - name: dfx dev
     init: |
       . ~/fix_gitpod_path.sh
+      npm install -g yarn
       ./sh_post_container_created.sh
     command: |
       . ~/fix_gitpod_path.sh
