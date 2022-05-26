@@ -62,7 +62,6 @@
     "text-encoding": "^0.7.0"
   },
   "devDependencies": {
-    "@parcel/transformer-typescript-types": "2.5.0",
     "@types/sha256": "^0.2.0",
     "@types/shelljs": "^0.8.11",
     "@typescript-eslint/eslint-plugin": "5.26.0",
