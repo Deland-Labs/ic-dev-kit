@@ -162,11 +162,6 @@ export class IdentityFactory {
 
     loadAllIdentities() {
         let identityNames = this.getIdentityPemNames();
-        if (!identityNames.includes(DEFAULT_IDENTITY_NAME)) {
-            identityNames.push(DEFAULT_IDENTITY_NAME);
-        }
-
-        // always load default identity
         identityNames.forEach(this.loadIdentityInfo);
     }
 
