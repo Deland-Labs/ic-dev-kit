@@ -1,10 +1,9 @@
 import fs from "fs";
 import archiver from "archiver";
-import { DfxJsonCanister, DfxPackageEnv, get_dfx_json, get_dfx_package_json, get_wasm_path } from "../src/dfxJson"
+import { DfxJsonCanister, get_dfx_json, get_dfx_package_json, get_wasm_path, DEFAULT_DFX_PACKAGE_JSON_FILENAME } from '../src/dfxJson';
 import { canister } from "../src"
 import logger from "node-color-log";
 import { exec } from "shelljs";
-import { icDevKitConfiguration } from "../src/ICDevKitConfiguration";
 import { ICPackInput } from "../src/types";
 
 const package_dir = "package"
@@ -44,7 +43,7 @@ const pack_npm_client = (input: PackNpmClientInput) => {
     fs.writeFileSync(package_json, JSON.stringify(package_json_content_obj, null, 2));
 
     const generate_bind = (target: string) => {
-        let result = exec(`npx ic-didc bind ${input.did_file_path} --target ${target}`);
+        let result = exec(`npx ic-didc bind ${input.did_file_path} --target ${target}`, { silent: true });
         if (result.code !== 0) {
             logger.error(`npm client generate bind error for ${input.did_file_path}: ${result.stderr}`);
             return "";
@@ -131,7 +130,7 @@ const build_all = async (build_context: BuildContext) => {
         const assert_dir = `${canister_env_dir}/assets`;
         ensure_dir(assert_dir);
 
-        const isProductionEnv = (canisterEnv == icDevKitConfiguration.canister.production_env);
+        const isProductionEnv = (canisterEnv == build_context.icPackInput.productionCanisterEnv);
         logger.debug(`build canister_env ${canisterEnv}, isProductionEnv: ${isProductionEnv}`);
 
         for (let [name, canister_json] of Object.entries(build_context.canisters)) {
@@ -139,7 +138,10 @@ const build_all = async (build_context: BuildContext) => {
             const did_path = canister_json.candid;
             // copy did and wasm to assets dir
             {
-                canister.build(name, canisterEnv);
+                canister.build(name, {
+                    canisterEnv: canisterEnv,
+                    canisterEnvName: build_context.icPackInput.canisterEnvName
+                });
 
                 // copy wasm files to canister_env dir
                 fs.copyFileSync(wasm_path, `${assert_dir}/${name}.wasm`);
@@ -218,8 +220,8 @@ const check = async (build_context: BuildContext) => {
 
 const create_zip = async (build_context: BuildContext) => {
     // create zip file for each env
-    for (const env of build_context.envs) {
-        const env_dir = `${package_dir}/${env.name}`;
+    for (const env of build_context.canister_envs) {
+        const env_dir = `${package_dir}/${env}`;
         const output_zip = fs.createWriteStream(`${env_dir}.zip`);
         const archive = archiver("zip", {
             zlib: { level: 9 }
@@ -229,14 +231,13 @@ const create_zip = async (build_context: BuildContext) => {
         archive.directory(env_dir, false);
         await archive.finalize();
 
-        logger.info(`Created zip file for ${env.name}`);
+        logger.info(`Created zip file for ${env}`);
     }
 }
 
 interface BuildContext {
     icPackInput: ICPackInput,
     canisters: Map<string, DfxJsonCanister>
-    envs: DfxPackageEnv[],
     canister_envs: string[]
 }
 
@@ -264,11 +265,21 @@ export const execute_task_pack = async (input: ICPackInput) => {
         logger.info(`Exclude canisters: ${exclude_canisters.join(", ")}`);
     }
 
+    const all_envs = new Set(dfxPackageJson.envs.map(env => env.canister_env));
+    let canister_envs;
+    if (input.canisterEnv) {
+        if (!all_envs.has(input.canisterEnv)) {
+            logger.error(`Canister env ${input.canisterEnv} not found in ${DEFAULT_DFX_PACKAGE_JSON_FILENAME}`);
+            return;
+        }
+        canister_envs = [input.canisterEnv];
+    } else {
+        canister_envs = [...all_envs];
+    }
     const build_context: BuildContext = {
         icPackInput: input,
         canisters: canisters as Map<string, DfxJsonCanister>,
-        envs: dfxPackageJson.envs,
-        canister_envs: [...new Set(dfxPackageJson.envs.map(env => env.canister_env))]
+        canister_envs: canister_envs,
     };
     logger.debug(`build_context: ${JSON.stringify(build_context, null, 2)}`);
 

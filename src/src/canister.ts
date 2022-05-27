@@ -5,7 +5,7 @@ import * as fs from "fs";
 import { identityFactory } from "./identity";
 import logger from "node-color-log";
 import { Principal } from "@dfinity/principal";
-import { icDevKitConfiguration } from "./ICDevKitConfiguration";
+import { DEFAULT_BUILD_ENV_NAME } from "./defaults";
 
 export const create = (name: string) => {
     const result = exec(`dfx canister create ${name}`);
@@ -15,14 +15,18 @@ export const create = (name: string) => {
 };
 
 export const createAll = async () => {
-    //const result = exec(`dfx canister create --all --with-cycles 16000000000000`);
     const result = exec(`dfx canister create --all`);
     if (result.code !== 0) {
         throw new Error(result.stderr);
     }
 };
 
-export const build = (name: string, canisterEnv?: string) => {
+export interface CanisterBuildOptions {
+    canisterEnv?: string;
+    canisterEnvName?: string;
+}
+
+export const build = (name: string, options?: CanisterBuildOptions) => {
     let dfx_json = get_dfx_json();
     let canister: DfxJsonCanister = dfx_json.canisters.get(
         name
@@ -38,10 +42,10 @@ export const build = (name: string, canisterEnv?: string) => {
         return;
     }
 
-    if (canisterEnv) {
-        // set env var EX3_CANISTER_ENV=canisterEnv
-        logger.debug(`Building canister ${name} with canister_env ${canisterEnv}`);
-        exec(`${icDevKitConfiguration.canister.build_env_name}=${canisterEnv} dfx build ${name}`);
+    if (options?.canisterEnv) {
+        logger.debug(`Building canister ${name} with canister_env ${options.canisterEnv}`);
+        const canisterEnvName = options?.canisterEnv ?? DEFAULT_BUILD_ENV_NAME;
+        exec(`${canisterEnvName}=${options.canisterEnv} dfx build ${name}`);
     } else {
         logger.debug(`Building canister ${name}`);
         const result = exec(`dfx build ${name}`);

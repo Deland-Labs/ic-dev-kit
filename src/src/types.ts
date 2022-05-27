@@ -10,4 +10,20 @@ export type SubAccount = Uint8Array;
 export interface ICPackInput {
     packageScope: string,
     version: string,
+    canisterEnv?: string,
+    canisterEnvName: string,
+    productionCanisterEnv: string,
 }
+
+export interface ICGenerateInput {
+    declarationsOutDir: string,
+}
+
+export interface ICInitIdentityInput {
+    pemSourceDir: string;
+}
+
+export interface ICShowPrincipalInput {
+    name?: string;
+}
+

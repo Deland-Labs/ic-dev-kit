@@ -5,8 +5,7 @@
     },
     "canister": {
         "build_env": "CANISTER_ENV",
-        "production_env": "production",
-        "declarations_out_dir": "./src/declarations/"
+        "production_env": "production"
     },
     "pack": {
         "package_scope": "ic"
