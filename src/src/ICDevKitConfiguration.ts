@@ -1,9 +1,10 @@
 import fs from "fs";
+import { merge } from "lodash";
 import logger from "node-color-log";
 
+export const IC_DEV_KIT_CONFIGURATION_FILE_NAME = "ic-dev-kit.json";
 export const DEFAULT_PEM_SOURCE_DIR = './ic-dev-kit/pem/';
 export const DEFAULT_IDENTITY_NAME = "default";
-export const DEFAULT_DECLARATIONS_OUT_DIR = "./src/declarations/";
 
 export interface ICDevKitConfigurationIdentitySection {
     pem_source_dir: string;
@@ -11,12 +12,11 @@ export interface ICDevKitConfigurationIdentitySection {
 }
 
 export interface ICDevKitConfigurationCanisterSection {
-    declarations_out_dir: string;
+    production_env: string;
 }
 
 export interface ICDevKitConfiguration {
     identity: ICDevKitConfigurationIdentitySection;
-    canister: ICDevKitConfigurationCanisterSection;
 }
 
 export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
@@ -26,14 +26,10 @@ export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
             pem_source_dir: DEFAULT_PEM_SOURCE_DIR,
             default_identity: DEFAULT_IDENTITY_NAME
         },
-        canister: {
-            declarations_out_dir: DEFAULT_DECLARATIONS_OUT_DIR
-        }
     };
     try {
-        config = JSON.parse(fs.readFileSync('./ic-dev-kit.json').toString());
-        // TODO how to merge?
-        config = {...default_config, ...config};
+        config = JSON.parse(fs.readFileSync(IC_DEV_KIT_CONFIGURATION_FILE_NAME).toString());
+        config = merge(default_config, config);
     } catch (e) {
         logger.info('No config file found, using default configuration');
         config = default_config;
@@ -41,3 +37,6 @@ export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
     logger.debug(`Loaded configuration: ${JSON.stringify(config, null, 2)}`);
     return config as ICDevKitConfiguration;
 };
+
+
+export const icDevKitConfiguration = LoadICDevKitConfiguration();

@@ -3,9 +3,10 @@ import { exec } from "shelljs";
 import logger from "node-color-log";
 import { get_dfx_json } from "../src/dfxJson";
 import fs from "fs";
-import { DEFAULT_DECLARATIONS_OUT_DIR, LoadICDevKitConfiguration } from "../src/ICDevKitConfiguration";
+import { ICGenerateInput } from "../src/types";
+import { DEFAULT_DECLARATIONS_OUT_DIR } from "../src/defaults";
 
-export const execute_task_generate = async () => {
+export const execute_task_generate = async (input: ICGenerateInput) => {
     logger.debug("Generating code of canisters client ...");
 
     const dfxJson = get_dfx_json();
@@ -16,8 +17,7 @@ export const execute_task_generate = async () => {
         }
     }
 
-    const icDevKitConfiguration = LoadICDevKitConfiguration();
-    const outDir = icDevKitConfiguration.canister.declarations_out_dir;
+    const outDir = input.declarationsOutDir;
     fs.mkdirSync(outDir, { recursive: true });
 
     // remove ./src/declarations/*/index.js

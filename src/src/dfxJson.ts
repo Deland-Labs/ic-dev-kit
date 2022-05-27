@@ -59,7 +59,8 @@ export interface DfxPackageJson {
 
 export interface DfxPackageCanister {
     exclude_in_package?: boolean;
-    copy_ts_declarations?: boolean;
+    pack_npm_client?: boolean;
+    pack_npm_server?: boolean;
 }
 
 export interface DfxPackageEnv {
@@ -92,6 +93,15 @@ export class FileDfxPackage implements DfxPackageJson {
 }
 
 export const get_dfx_package_json = (): DfxPackageJson => {
-    const json = fs.readFileSync("./dfx_package.json", "utf8");
+    const json = fs.readFileSync(DEFAULT_DFX_PACKAGE_JSON_FILENAME, "utf8");
     return new FileDfxPackage(json);
+};
+
+export const DEFAULT_DFX_PACKAGE_JSON_FILENAME = "dfx_package.json";
+export const DEFAULT_DFX_PACKAGE_JSON = {
+    canisters: {},
+    envs: [{
+        "name": "production",
+        "canister_env": "production"
+    }],
 };

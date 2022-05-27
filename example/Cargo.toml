@@ -1,0 +1,12 @@
+[workspace]
+members = [
+    "canisters/one_way_hoster",
+    "canisters/one_way_caller",
+]
+
+[profile.release]
+lto = true
+opt-level = 'z'
+panic = 'abort'
+
+

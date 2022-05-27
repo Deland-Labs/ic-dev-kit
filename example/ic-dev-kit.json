@@ -1,0 +1,13 @@
+{
+    "identity": {
+        "pem_source_dir": "./ic-dev-kit/pem/",
+        "default_identity": "default"
+    },
+    "canister": {
+        "build_env": "CANISTER_ENV",
+        "production_env": "production"
+    },
+    "pack": {
+        "package_scope": "ic"
+    }
+}

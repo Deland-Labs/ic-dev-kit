@@ -1,10 +1,11 @@
-import {exec} from "shelljs";
-import {Actor, CanisterInstallMode, HttpAgent} from "@dfinity/agent";
-import {DfxJsonCanister, get_dfx_json, get_wasm_path} from "./dfxJson";
+import { exec } from "shelljs";
+import { Actor, CanisterInstallMode, HttpAgent } from "@dfinity/agent";
+import { DfxJsonCanister, get_dfx_json, get_wasm_path } from "./dfxJson";
 import * as fs from "fs";
-import {identityFactory} from "./identity";
+import { identityFactory } from "./identity";
 import logger from "node-color-log";
-import {Principal} from "@dfinity/principal";
+import { Principal } from "@dfinity/principal";
+import { DEFAULT_BUILD_ENV_NAME } from "./defaults";
 
 export const create = (name: string) => {
     const result = exec(`dfx canister create ${name}`);
@@ -14,14 +15,18 @@ export const create = (name: string) => {
 };
 
 export const createAll = async () => {
-    //const result = exec(`dfx canister create --all --with-cycles 16000000000000`);
     const result = exec(`dfx canister create --all`);
     if (result.code !== 0) {
         throw new Error(result.stderr);
     }
 };
 
-export const build = (name: string, canisterEnv?: string) => {
+export interface CanisterBuildOptions {
+    canisterEnv?: string;
+    canisterEnvName?: string;
+}
+
+export const build = (name: string, options?: CanisterBuildOptions) => {
     let dfx_json = get_dfx_json();
     let canister: DfxJsonCanister = dfx_json.canisters.get(
         name
@@ -37,10 +42,10 @@ export const build = (name: string, canisterEnv?: string) => {
         return;
     }
 
-    if (canisterEnv) {
-        // set env var EX3_CANISTER_ENV=canisterEnv
-        logger.debug(`Building canister ${name} with features ${canisterEnv}`);
-        exec(`EX3_CANISTER_ENV=${canisterEnv} dfx build ${name}`);
+    if (options?.canisterEnv) {
+        logger.debug(`Building canister ${name} with canister_env ${options.canisterEnv}`);
+        const canisterEnvName = options?.canisterEnv ?? DEFAULT_BUILD_ENV_NAME;
+        exec(`${canisterEnvName}=${options.canisterEnv} dfx build ${name}`);
     } else {
         logger.debug(`Building canister ${name}`);
         const result = exec(`dfx build ${name}`);
@@ -64,7 +69,7 @@ export const reinstall = (name: string, args?: string) => {
     if (args) {
         const command = `echo yes | dfx canister install --mode reinstall ${name} --argument ${args} `;
         logger.debug(`Running command: ${command}`);
-        result = exec(command, {silent: true});
+        result = exec(command, { silent: true });
     } else {
         result = exec(`echo yes | dfx canister install --mode reinstall ${name}`, {
             silent: true,
@@ -134,7 +139,7 @@ export const addMainAsController = async () => {
 };
 
 export const get_id = (name: string) => {
-    return exec(`dfx canister id ${name}`, {silent: true}).stdout.trim();
+    return exec(`dfx canister id ${name}`, { silent: true }).stdout.trim();
 };
 
 export const get_principal = (name: string) => {

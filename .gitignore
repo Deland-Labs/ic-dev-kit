@@ -6,3 +6,7 @@ package-lock.json
 dist/
 docs/
 yarn-error.log
+target
+.dfx
+example/package/
+example/package_canister_env/
