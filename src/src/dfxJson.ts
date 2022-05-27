@@ -101,7 +101,7 @@ export const DEFAULT_DFX_PACKAGE_JSON_FILENAME = "dfx_package.json";
 export const DEFAULT_DFX_PACKAGE_JSON = {
     canisters: {},
     envs: [{
-        "name": "dev",
-        "canister_env": "dev"
+        "name": "production",
+        "canister_env": "production"
     }],
 };

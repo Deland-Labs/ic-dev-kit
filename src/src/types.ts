@@ -6,3 +6,8 @@ export type E8s = bigint;
 export type Memo = bigint;
 export type PrincipalString = string;
 export type SubAccount = Uint8Array;
+
+export interface ICPackInput {
+    packageScope: string,
+    version: string,
+}

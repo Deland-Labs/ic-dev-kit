@@ -1,10 +1,13 @@
 {
-  "canisters": {
-  },
+  "canisters": {},
   "envs": [
     {
       "name": "dev",
       "canister_env": "dev"
+    },
+    {
+      "name": "production",
+      "canister_env": "production"
     }
   ]
 }

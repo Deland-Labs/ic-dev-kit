@@ -36,13 +36,7 @@
     "doc": "./docs"
   },
   "bin": {
-    "ic-build-all": "./bins/ic-build-all.js",
-    "ic-generate": "./bins/ic-generate.js",
-    "ic-init-identity": "./bins/ic-init-identity.js",
-    "ic-pack": "./bins/ic-pack.js",
-    "ic-init": "./bins/ic-init.js",
-    "ic-update-did": "./bins/ic-update-did.js",
-    "ic-show-principal": "./bins/ic-show-principal.js"
+    "ic": "./src/entrypoint.js"
   },
   "dependencies": {
     "@dfinity/agent": "^0.11.0",
@@ -53,8 +47,10 @@
     "@trust/webcrypto": "^0.9.2",
     "archiver": "^5.3.1",
     "bignumber.js": "^9.0.2",
+    "commander": "^9.2.0",
     "crc": "^4.1.1",
     "js-sha256": "^0.9.0",
+    "lodash": "^4.17.21",
     "node-color-log": "^9.0.0",
     "node-fetch": "^2.6.7",
     "sha256": "^0.2.0",
@@ -65,6 +61,8 @@
     "@deland-labs/ic-bin-tools": "0.1.1"
   },
   "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/lodash": "^4.14.182",
     "@types/sha256": "^0.2.0",
     "@types/shelljs": "^0.8.11",
     "@typescript-eslint/eslint-plugin": "5.26.0",

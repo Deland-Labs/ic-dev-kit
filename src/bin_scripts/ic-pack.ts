@@ -5,7 +5,7 @@ import { canister } from "../src"
 import logger from "node-color-log";
 import { exec } from "shelljs";
 import { icDevKitConfiguration } from "../src/ICDevKitConfiguration";
-import { safeRead } from "@dfinity/candid";
+import { ICPackInput } from "../src/types";
 
 const package_dir = "package"
 
@@ -131,9 +131,9 @@ const build_all = async (build_context: BuildContext) => {
         const assert_dir = `${canister_env_dir}/assets`;
         ensure_dir(assert_dir);
 
-        const isProductionEnv = canisterEnv === icDevKitConfiguration.canister.production_env;
+        const isProductionEnv = (canisterEnv == icDevKitConfiguration.canister.production_env);
+        logger.debug(`build canister_env ${canisterEnv}, isProductionEnv: ${isProductionEnv}`);
 
-        logger.debug(`build canister_env: ${canisterEnv}`);
         for (let [name, canister_json] of Object.entries(build_context.canisters)) {
             const wasm_path = get_wasm_path(canister_json);
             const did_path = canister_json.candid;
@@ -148,20 +148,20 @@ const build_all = async (build_context: BuildContext) => {
             }
             {
                 const npm_dir = `${canister_env_dir}/npm`;
+                const packageScope = build_context.icPackInput.packageScope;
                 ensure_dir(npm_dir);
                 // build npm client
                 {
                     // npm client
                     if (canister_json.pack_config?.pack_npm_client != false) {
                         const packageName = isProductionEnv
-                            ? `@${icDevKitConfiguration.pack.package_scope}/${name}_client`
-                            : `@${icDevKitConfiguration.pack.package_scope}/${name}_${canisterEnv}_client`;
+                            ? `@${packageScope}/${name}_client`
+                            : `@${packageScope}/${name}_${canisterEnv}_client`;
                         const npm_client_input: PackNpmClientInput = {
                             did_file_path: did_path,
                             target_dir_path: `${npm_dir}/client/${name}`,
                             name: packageName,
-                            // TODO version
-                            version: "0.1.0",
+                            version: build_context.icPackInput.version
                         }
                         pack_npm_client(npm_client_input);
                     }
@@ -170,15 +170,14 @@ const build_all = async (build_context: BuildContext) => {
                 {
                     if (canister_json.pack_config?.pack_npm_server != false) {
                         const packageName = isProductionEnv
-                            ? `@${icDevKitConfiguration.pack.package_scope}/${name}_server`
-                            : `@${icDevKitConfiguration.pack.package_scope}/${name}_${canisterEnv}_server`;
+                            ? `@${packageScope}/${name}_server`
+                            : `@${packageScope}/${name}_${canisterEnv}_server`;
                         const npm_server_input: PackNpmServerInput = {
                             did_file_path: did_path,
                             wasm_file_path: wasm_path,
                             target_dir_path: `${npm_dir}/server/${name}`,
                             name: packageName,
-                            // TODO version
-                            version: "0.1.0",
+                            version: build_context.icPackInput.version
                         }
                         pack_npm_server(npm_server_input);
                     }
@@ -235,12 +234,14 @@ const create_zip = async (build_context: BuildContext) => {
 }
 
 interface BuildContext {
+    icPackInput: ICPackInput,
     canisters: Map<string, DfxJsonCanister>
     envs: DfxPackageEnv[],
     canister_envs: string[]
 }
 
-export const execute_task_pack = async () => {
+export const execute_task_pack = async (input: ICPackInput) => {
+
     const dfxJson = get_dfx_json();
     const dfxPackageJson = get_dfx_package_json();
     // join canisters keys as string
@@ -264,6 +265,7 @@ export const execute_task_pack = async () => {
     }
 
     const build_context: BuildContext = {
+        icPackInput: input,
         canisters: canisters as Map<string, DfxJsonCanister>,
         envs: dfxPackageJson.envs,
         canister_envs: [...new Set(dfxPackageJson.envs.map(env => env.canister_env))]
