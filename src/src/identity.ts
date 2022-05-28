@@ -12,6 +12,7 @@ import {
     LoadICDevKitConfiguration
 } from "./ICDevKitConfiguration";
 import { ICShowPrincipalInput } from "./types";
+import { identityInitialization } from "./identityInitialization";
 
 function get_pem_path(name: string): string {
     // get current home directory
@@ -86,39 +87,23 @@ export class IdentityFactory {
         this._identities.set(name, identityInfo);
     };
 
-    import_identity = (name: string) => {
-        this.new_identity(name);
-        // override static key file from scripts/identity_pem/${name}/identity.pem
-        let target_pem_path = get_pem_path(name);
-        {    // chmod 777 for target_pem_path
-            let result = exec(`chmod 777 ${target_pem_path}`, { silent: false });
-            if (result.code !== 0) {
-
-                logger.error(result.stderr);
-                throw new Error(`Failed to chmod 777 ${target_pem_path}`);
+    ensureIdentityLoaded() {
+        if (this._identities.size == 0) {
+            let identityNames = identityInitialization.getIdentityPemNames();
+            if (!identityNames.includes(DEFAULT_IDENTITY_NAME)) {
+                identityNames.push(DEFAULT_IDENTITY_NAME);
             }
-        }
-        let source_pem_path = `${this._configuration.pem_source_dir}/${name}.pem`;
-        fs.copyFileSync(source_pem_path, target_pem_path);
-    }
-
-    new_identity = (name: string) => {
-        let result = exec(`dfx identity new ${name}`, { silent: false });
-        if (result.code !== 0) {
-            if (result.stderr.trim().endsWith("Error: Identity already exists.")) {
-                logger.debug(`identity for ${name} already created`);
-            } else {
-                logger.error(result.stderr);
-                throw new Error(`Failed to create new identity ${name}`);
-            }
+            identityNames.forEach(this.loadIdentityInfo);
         }
     }
 
     deleteIdentityInfo = (name: string) => {
+        this.ensureIdentityLoaded();
         this._identities.delete(name);
         deleteDfxIdentity(name);
     };
     deleteIdentityInfos = () => {
+        this.ensureIdentityLoaded();
         this._identities.forEach((value, key) => {
             this.deleteIdentityInfo(key);
         });
@@ -128,19 +113,15 @@ export class IdentityFactory {
         return DEFAULT_HOST;
     };
 
-    loadAllIdentities() {
-        let identityNames = this.getIdentityPemNames();
-        if (!identityNames.includes(DEFAULT_IDENTITY_NAME)) {
-            identityNames.push(DEFAULT_IDENTITY_NAME);
-        }
-        identityNames.forEach(this.loadIdentityInfo);
-    }
-
     getIdentity = (name?: string): IdentityInfo | undefined => {
+        this.ensureIdentityLoaded();
+
         return this._identities.get(name || this.getDefaultIdentityName());
     };
 
     getPrincipals = (): { Principal; String }[] => {
+        this.ensureIdentityLoaded();
+
         const principals: { Principal; String }[] = [];
         this._identities.forEach((identityInfo, Name) => {
             principals.push({
@@ -152,6 +133,8 @@ export class IdentityFactory {
     };
 
     getPrincipal = (name?: string): Principal | undefined => {
+        this.ensureIdentityLoaded();
+
         const identityInfo = this.getIdentity(name || this.getDefaultIdentityName());
         if (identityInfo) {
             return identityInfo.identity.getPrincipal();
@@ -160,6 +143,8 @@ export class IdentityFactory {
     };
 
     getAccountIdHex = (name?: string, index?: number): string | undefined => {
+        this.ensureIdentityLoaded();
+
         const identityInfo = this.getIdentity(name || this.getDefaultIdentityName());
         if (identityInfo) {
             const principal = identityInfo.identity.getPrincipal();
@@ -176,6 +161,8 @@ export class IdentityFactory {
         name?: string,
         index?: number
     ): Array<number> | undefined => {
+        this.ensureIdentityLoaded();
+
         const identityInfo = this.getIdentity(name || this.getDefaultIdentityName());
         if (identityInfo) {
             const principal = identityInfo.identity.getPrincipal();
@@ -191,23 +178,13 @@ export class IdentityFactory {
         return subAccount;
     };
 
-    getIdentityPemNames(): string[] {
-        const source_dir = this._configuration.pem_source_dir;
-        if (!fs.existsSync(source_dir)) {
-            logger.debug(`pem source dir ${source_dir} not exist`);
-            return [];
-        }
-        const files = fs.readdirSync(source_dir);
-        return files
-            .filter(file => file.endsWith(".pem"))
-            .map(file => file.replace(".pem", ""));
-    }
-
     getDefaultIdentityName(): string {
         return this._configuration.default_identity;
     }
 
     printIdentity(input: ICShowPrincipalInput) {
+        this.ensureIdentityLoaded();
+
         let content = "principal:\n";
         const append_content = (name: string, info: IdentityInfo) => {
             content += `# ${name} node\n`;
@@ -237,4 +214,3 @@ export class IdentityFactory {
 }
 
 export const identityFactory = new IdentityFactory();
-identityFactory.loadAllIdentities();

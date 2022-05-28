@@ -8,8 +8,8 @@ export const execute_task_init_identity = () => {
     // identities.json written to disk
     logger.debug("Identities created");
 
-    canister.createAll();
     require("../src/setupGlobalAgent");
+    canister.createAll();
     canister.addMainAsController()
         .then(() => {
             logger.info("Main controller added");

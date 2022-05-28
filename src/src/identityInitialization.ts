@@ -3,6 +3,7 @@ import * as fs from "fs";
 import logger from "node-color-log";
 import {
     DEFAULT_IDENTITY_NAME,
+    icDevKitConfiguration,
     ICDevKitConfigurationIdentitySection,
     LoadICDevKitConfiguration
 } from "./ICDevKitConfiguration";
@@ -49,14 +50,18 @@ export class IdentityInitialization {
             }
         }
         let source_pem_path = `${this._configuration.pem_source_dir}/${name}.pem`;
-        fs.copyFileSync(source_pem_path, target_pem_path);
+        if (fs.existsSync(source_pem_path)) {
+            logger.warn(`there is no identity.pem in ${this._configuration.pem_source_dir}, it could be unstable for dev env`);
+        } else {
+            fs.copyFileSync(source_pem_path, target_pem_path);
+        }
     }
 
     initAllIdentities() {
         let identityNames = this.getIdentityPemNames();
         if (identityNames.length == 0) {
-            logger.info("There is no identity need to be import, use default identity");
-            new_identity(DEFAULT_IDENTITY_NAME);
+            const defaultIdentity = icDevKitConfiguration.identity.default_identity;
+            logger.info(`There is no identity need to be import, use default identity: ${defaultIdentity}`);
         }
         if (!identityNames.includes(DEFAULT_IDENTITY_NAME)) {
             identityNames.push(DEFAULT_IDENTITY_NAME);

@@ -34,4 +34,3 @@ export interface ICInitIdentityInput {
 export interface ICShowPrincipalInput {
     name?: string;
 }
-

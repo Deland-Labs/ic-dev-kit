@@ -12,7 +12,7 @@ pub fn test_one_way_caller(ps: Principal, target: Principal) {
     // call the target without waiting for the result
     // no matter test_one_way_caller is async or not
     let args_raw = encode_args((ps, )).expect("Failed to encode arguments.");
-    let result = call_raw(target.clone(), "test_one_way", args_raw, 0);
+    let result = call_raw(target.clone(), "test_one_way", args_raw.as_slice(), 0);
 
     // this does not work
     // let result = ic_cdk::call::<(Principal, ), ()>(target.clone(), "test_one_way", (ps, ));
