@@ -51,7 +51,7 @@ const pack_npm_client = (input: PackNpmClientInput) => {
         return result.stdout;
     }
     // generate index.js
-    const index_js = `${input.target_dir_path}/index.ts`;
+    const index_js = `${input.target_dir_path}/index.js`;
     const js = generate_bind("js");
     if (js) {
         fs.writeFileSync(index_js, js);
