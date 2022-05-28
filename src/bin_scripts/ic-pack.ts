@@ -109,7 +109,7 @@ const pack_npm_server = (input: PackNpmServerInput) => {
     fs.copyFileSync(input.did_file_path, `${input.target_dir_path}/index.did`);
 }
 
-const build_all = async (build_context: BuildContext) => {
+const build_all = async (buildContext: BuildContext) => {
 
     // reset package_canister_env dir
     if (fs.existsSync(package_dir)) {
@@ -118,7 +118,7 @@ const build_all = async (build_context: BuildContext) => {
     fs.mkdirSync(package_dir)
 
     // distinct canister_env
-    let canister_envs = build_context.canister_envs;
+    let canister_envs = buildContext.canister_envs;
 
 
     // build each canister by each canister_env
@@ -130,17 +130,17 @@ const build_all = async (build_context: BuildContext) => {
         const assert_dir = `${canister_env_dir}/assets`;
         ensure_dir(assert_dir);
 
-        const isProductionEnv = (canisterEnv == build_context.icPackInput.productionCanisterEnv);
+        const isProductionEnv = (canisterEnv == buildContext.icPackInput.productionCanisterEnv);
         logger.debug(`build canister_env ${canisterEnv}, isProductionEnv: ${isProductionEnv}`);
 
-        for (let [name, canister_json] of Object.entries(build_context.canisters)) {
+        for (let [name, canister_json] of Object.entries(buildContext.canisters)) {
             const wasm_path = get_wasm_path(canister_json);
             const did_path = canister_json.candid;
             // copy did and wasm to assets dir
             {
                 canister.build(name, {
                     canisterEnv: canisterEnv,
-                    canisterEnvName: build_context.icPackInput.canisterEnvName
+                    canisterEnvName: buildContext.icPackInput.canisterEnvName
                 });
 
                 // copy wasm files to canister_env dir
@@ -150,7 +150,7 @@ const build_all = async (build_context: BuildContext) => {
             }
             {
                 const npm_dir = `${canister_env_dir}/npm`;
-                const packageScope = build_context.icPackInput.packageScope;
+                const packageScope = buildContext.icPackInput.packageScope;
                 ensure_dir(npm_dir);
                 // build npm client
                 {
@@ -163,7 +163,7 @@ const build_all = async (build_context: BuildContext) => {
                             did_file_path: did_path,
                             target_dir_path: `${npm_dir}/client/${name}`,
                             name: packageName,
-                            version: build_context.icPackInput.version
+                            version: buildContext.icPackInput.version
                         }
                         pack_npm_client(npm_client_input);
                     }
@@ -179,7 +179,7 @@ const build_all = async (build_context: BuildContext) => {
                             wasm_file_path: wasm_path,
                             target_dir_path: `${npm_dir}/server/${name}`,
                             name: packageName,
-                            version: build_context.icPackInput.version
+                            version: buildContext.icPackInput.version
                         }
                         pack_npm_server(npm_server_input);
                     }
@@ -199,9 +199,9 @@ const clean = async () => {
     fs.mkdirSync(package_dir);
 }
 
-const check = async (build_context: BuildContext) => {
+const check = async (buildContext: BuildContext) => {
     // ensure every wasm file in package_canister_env dir must be < 2MB, check recursive
-    for (let canister_env of build_context.canister_envs) {
+    for (let canister_env of buildContext.canister_envs) {
         const canister_env_dir = `${package_dir}/${canister_env}/assets`
         const files = fs.readdirSync(canister_env_dir);
         for (const file of files) {
@@ -218,9 +218,9 @@ const check = async (build_context: BuildContext) => {
     logger.debug("Check done")
 }
 
-const create_zip = async (build_context: BuildContext) => {
+const create_zip = async (buildContext: BuildContext) => {
     // create zip file for each env
-    for (const env of build_context.canister_envs) {
+    for (const env of buildContext.canister_envs) {
         const env_dir = `${package_dir}/${env}`;
         const output_zip = fs.createWriteStream(`${env_dir}.zip`);
         const archive = archiver("zip", {
@@ -232,6 +232,28 @@ const create_zip = async (build_context: BuildContext) => {
         await archive.finalize();
 
         logger.info(`Created zip file for ${env}`);
+    }
+}
+
+const publishPackage = (buildContext: BuildContext) => {
+    const publishComamnd = `yarn publish --frozen-lockfile --non-interactive --no-git-tag-version --no-commit-hooks`;
+    for (const canister_env of buildContext.canister_envs) {
+        const envNpmDir = `${package_dir}/${canister_env}/npm`;
+        const categoryDirs = fs.readdirSync(envNpmDir);
+        for (const category of categoryDirs) {
+            const categoryDir = `${envNpmDir}/${category}`;
+            const packageDirs = fs.readdirSync(categoryDir);
+            for (const packageName of packageDirs) {
+                const packageDir = `${categoryDir}/${packageName}`;
+                logger.debug(`Publishing ${packageDir}`);
+                let result = exec(`cd ${packageDir} && ${publishComamnd}`, { silent: true });
+                if (result.code != 0) {
+                    logger.error(`Failed to publish ${packageDir}. Error: ${result.stderr}`);
+                } else {
+                    logger.info(`Published ${packageDir}`);
+                }
+            }
+        }
     }
 }
 
@@ -276,17 +298,22 @@ export const execute_task_pack = async (input: ICPackInput) => {
     } else {
         canister_envs = [...all_envs];
     }
-    const build_context: BuildContext = {
+    const buildContext: BuildContext = {
         icPackInput: input,
         canisters: canisters as Map<string, DfxJsonCanister>,
         canister_envs: canister_envs,
     };
-    logger.debug(`build_context: ${JSON.stringify(build_context, null, 2)}`);
+    logger.debug(`buildContext: ${JSON.stringify(buildContext, null, 2)}`);
 
     await clean();
-    await build_all(build_context);
-    await check(build_context);
-    await create_zip(build_context);
+    await build_all(buildContext);
+    await check(buildContext);
+    if (input.zip) {
+        await create_zip(buildContext);
+    }
+    if (input.publish) {
+        publishPackage(buildContext);
+    }
 
     logger.info("execute_task_pack done");
 }

@@ -9,6 +9,7 @@ import { execute_task_pack } from './bin_scripts/ic-pack';
 import { DEFAULT_BUILD_ENV_NAME, DEFAULT_DECLARATIONS_OUT_DIR, DEFAULT_PACKAGE_SCOPE, DEFAULT_PACKAGE_VERSION, DEFAULT_PRODUCTION_ENV } from './src/defaults';
 import logger from 'node-color-log';
 import { execute_task_get_account_id } from './bin_scripts/ic-get-account-id';
+import { ICPackInput } from './src/types';
 const program = new Command();
 
 program
@@ -71,13 +72,17 @@ program
     .option('-n, --canister-env-name <canister-env-name>', 'enviroment variable name to be set before run `dfx build`', DEFAULT_BUILD_ENV_NAME)
     .option('-e, --canister-env <canister-env>', 'canister env to pack, if not specified, pack all canisters', '')
     .option('-r, --production-canister-env <production-canister-env>', 'canister env to pack in production mode.', DEFAULT_PRODUCTION_ENV)
+    .option('--publish', 'publish npm package', false)
+    .option('--zip', 'zip package', false)
     .action((options, command) => {
-        const input = {
+        const input: ICPackInput = {
             packageScope: options.packageScope,
             version: options.packageVersion,
             canisterEnv: options.canisterEnv,
             canisterEnvName: options.canisterEnvName,
-            productionCanisterEnv: options.productionCanisterEnv
+            productionCanisterEnv: options.productionCanisterEnv,
+            zip: options.zip,
+            publish: options.publish
         };
         logger.debug(input);
         execute_task_pack(input);
