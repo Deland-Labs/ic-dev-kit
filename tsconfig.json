@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
-    "target": "es2021",
-    "module": "CommonJS",
+    "target": "ESNext",
+    "module": "esnext",
     "lib": [
       "dom",
       "es2017",
@@ -12,9 +12,11 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
+    "isolatedModules": true,
     "outDir": "./dist",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "jsxImportSource": "preact",
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,

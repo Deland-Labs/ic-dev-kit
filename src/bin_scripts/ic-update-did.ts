@@ -1,13 +1,13 @@
-import {exec} from "shelljs";
+import { exec } from "shelljs";
 import fs from "fs";
 import logger from "node-color-log";
-import {dfxJson as dfxJsonManager} from "../src";
+import * as dfxJsonManager from "../src/dfxJson";
 
 
 const download_did = async (canister) => {
     const command = `dfx canister call ${canister} __get_candid_interface_tmp_hack`;
     logger.debug(`download_did : ${command}`);
-    const result = exec(command, {silent: true});
+    const result = exec(command, { silent: true });
     if (result.code !== 0) {
         logger.error(`${canister} : ${result.stderr}`);
         logger.warn(`${canister} : ${result.stdout}`);

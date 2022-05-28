@@ -51,7 +51,7 @@ export class IdentityInitialization {
         }
         let source_pem_path = `${this._configuration.pem_source_dir}/${name}.pem`;
         if (!fs.existsSync(source_pem_path)) {
-            logger.warn(`there is no identity.pem in ${this._configuration.pem_source_dir}, it could be unstable for dev env`);
+            logger.warn(`there is no identity.pem in ${source_pem_path}, it could be unstable for dev env`);
         } else {
             fs.copyFileSync(source_pem_path, target_pem_path);
         }
