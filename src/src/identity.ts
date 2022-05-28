@@ -128,40 +128,11 @@ export class IdentityFactory {
         return DEFAULT_HOST;
     };
 
-    initAllIdentities() {
+    loadAllIdentities() {
         let identityNames = this.getIdentityPemNames();
-        if (identityNames.length == 0) {
-            logger.info("There is no identity need to be import, use default identity");
-            this.new_identity(DEFAULT_IDENTITY_NAME);
-        }
         if (!identityNames.includes(DEFAULT_IDENTITY_NAME)) {
             identityNames.push(DEFAULT_IDENTITY_NAME);
         }
-
-        let should_create_identities = false;
-        for (const identity_name of identityNames) {
-            const pem_path = get_pem_path(identity_name);
-            if (!fs.existsSync(pem_path)) {
-                should_create_identities = true;
-                break;
-            }
-        }
-        if (should_create_identities) {
-            logger.info("Creating identities...");
-
-            for (const identity_name of identityNames) {
-                this.import_identity(identity_name);
-            }
-        } else {
-            logger.info("Identities already exist");
-        }
-
-        // force to default identity in case of missing controller to local canisters when exec dfx
-        useDfxIdentity("default");
-    }
-
-    loadAllIdentities() {
-        let identityNames = this.getIdentityPemNames();
         identityNames.forEach(this.loadIdentityInfo);
     }
 

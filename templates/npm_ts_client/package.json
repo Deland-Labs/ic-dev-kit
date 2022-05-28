@@ -4,6 +4,7 @@
     "description": "",
     "types": "index.d.ts",
     "main": "index.js",
+    "module": "index.js",
     "keywords": [
       "ic"
     ],
