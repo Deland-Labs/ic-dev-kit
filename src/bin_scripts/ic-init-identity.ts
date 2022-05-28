@@ -1,4 +1,4 @@
-import { canister } from "../src";
+import * as canister from "../src/canister";
 import logger from "node-color-log";
 import { identityInitialization } from "../src/identityInitialization";
 

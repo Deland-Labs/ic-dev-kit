@@ -1,7 +1,7 @@
 import fs from "fs";
 import archiver from "archiver";
 import { DfxJsonCanister, get_dfx_json, get_dfx_package_json, get_wasm_path, DEFAULT_DFX_PACKAGE_JSON_FILENAME } from '../src/dfxJson';
-import { canister } from "../src"
+import * as canister from "../src/canister";
 import logger from "node-color-log";
 import { exec } from "shelljs";
 import { ICPackInput } from "../src/types";
@@ -30,7 +30,8 @@ const pack_npm_client = (input: PackNpmClientInput) => {
 
     ensure_dir(input.target_dir_path);
 
-    const npm_client_template_dir = `${__dirname}/../../templates/npm_ts_client`;
+    // dir starts from dist, so there is a ../
+    const npm_client_template_dir = `../templates/npm_ts_client`;
     // copy all files from npm_client_template_dir to target_dir_path
     fs.cpSync(`${npm_client_template_dir}/`, `${input.target_dir_path}/`, { recursive: true });
 
@@ -51,24 +52,31 @@ const pack_npm_client = (input: PackNpmClientInput) => {
         return result.stdout;
     }
     // generate index.js
-    const index_js = `${input.target_dir_path}/index.js`;
+    const index_js = `${input.target_dir_path}/did.js`;
     const js = generate_bind("js");
     if (js) {
         fs.writeFileSync(index_js, js);
     }
 
     // generate index.d.ts
-    const index_d_ts = `${input.target_dir_path}/index.d.ts`;
+    const index_d_ts = `${input.target_dir_path}/did.d.ts`;
     const d_ts = generate_bind("ts");
     if (d_ts) {
         fs.writeFileSync(index_d_ts, d_ts);
     }
 
     // generate index.did
-    const index_did = `${input.target_dir_path}/index.did`;
+    const index_did = `${input.target_dir_path}/did.did`;
     const did = generate_bind("did");
     if (did) {
         fs.writeFileSync(index_did, did);
+    }
+
+    // run parcel build to generate package
+    const parcel_build_result = exec(`cd ${input.target_dir_path} && npm run build`, { silent: true });
+    if (parcel_build_result.code !== 0) {
+        logger.error(`npm client parcel build error for ${input.did_file_path}: ${parcel_build_result.stderr}`);
+        return;
     }
 }
 
@@ -93,7 +101,8 @@ const pack_npm_server = (input: PackNpmServerInput) => {
 
     ensure_dir(input.target_dir_path);
 
-    const npm_server_template_dir = `${__dirname}/../../templates/npm_server`;
+    // dir starts from dist, so there is a ../
+    const npm_server_template_dir = `../templates/npm_server`;
     // copy all files from npm_server_template_dir to target_dir_path
     fs.cpSync(`${npm_server_template_dir}/`, `${input.target_dir_path}/`, { recursive: true });
 
