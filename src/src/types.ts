@@ -13,6 +13,14 @@ export interface ICPackInput {
     canisterEnv?: string,
     canisterEnvName: string,
     productionCanisterEnv: string,
+    /**
+     * Publish npm package if true
+     */
+    publish: boolean,
+    /**
+     * Create a zip file when true.
+     */
+    zip: boolean,
 }
 
 export interface ICGenerateInput {
