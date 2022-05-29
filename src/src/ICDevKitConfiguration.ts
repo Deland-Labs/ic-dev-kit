@@ -34,7 +34,7 @@ export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {
         logger.info('No config file found, using default configuration');
         config = default_config;
     }
-    logger.debug(`Loaded configuration: ${JSON.stringify(config, null, 2)}`);
+    // logger.debug(`Loaded configuration: ${JSON.stringify(config, null, 2)}`);
     return config as ICDevKitConfiguration;
 };
 

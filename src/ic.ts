@@ -1,3 +1,4 @@
+import "./src/setup"
 import { Argument, Command, OptionValues } from 'commander';
 import { execute_task_update_did } from './bin_scripts/ic-update-did';
 import { execute_task_init_dev_kit } from './bin_scripts/ic-init';

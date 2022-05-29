@@ -2,8 +2,7 @@ image: docker.io/kentsday/dfx_rust:bullseye-dfx-0.9.3-gitpod-5
 tasks:
   - name: dfx dev
     init: |
-      # . ~/fix_gitpod_path.sh
-      # ./sh_post_container_created.sh
+      . ~/fix_gitpod_path.sh
     command: |
       . ~/fix_gitpod_path.sh
       ./sh_post_container_created.sh

@@ -21,6 +21,22 @@ const ensure_dir = (dir: string) => {
     }
 }
 
+const templatesDir = (() => {
+    // templates installed from node_modules
+    const node_modules_templates = `./node_modules/@deland-labs/ic-dev-kit/ic_npm_templates`;
+    if (fs.existsSync(node_modules_templates)) {
+        return node_modules_templates;
+    }
+
+    let templates_dir = `ic_npm_templates`;
+    const max_retry = 5;
+    for (let i = 0; i < max_retry; i++) {
+        if (fs.existsSync(templates_dir)) {
+            return templates_dir;
+        }
+        templates_dir = `../${templates_dir}`;
+    }
+})()
 
 const pack_npm_client = (input: PackNpmClientInput) => {
     if (!fs.existsSync(input.did_file_path)) {
@@ -31,7 +47,7 @@ const pack_npm_client = (input: PackNpmClientInput) => {
     ensure_dir(input.target_dir_path);
 
     // dir starts from dist, so there is a ../
-    const npm_client_template_dir = `../templates/npm_ts_client`;
+    const npm_client_template_dir = `${templatesDir}/npm_ts_client`;
     // copy all files from npm_client_template_dir to target_dir_path
     fs.cpSync(`${npm_client_template_dir}/`, `${input.target_dir_path}/`, { recursive: true });
 
@@ -51,31 +67,31 @@ const pack_npm_client = (input: PackNpmClientInput) => {
         }
         return result.stdout;
     }
-    // generate index.js
-    const index_js = `${input.target_dir_path}/did.js`;
+    // generate index.ts from js binding
+    const index_js = `${input.target_dir_path}/index.ts`;
     const js = generate_bind("js");
     if (js) {
         fs.writeFileSync(index_js, js);
     }
 
     // generate index.d.ts
-    const index_d_ts = `${input.target_dir_path}/did.d.ts`;
+    const index_d_ts = `${input.target_dir_path}/index.d.ts`;
     const d_ts = generate_bind("ts");
     if (d_ts) {
         fs.writeFileSync(index_d_ts, d_ts);
     }
 
     // generate index.did
-    const index_did = `${input.target_dir_path}/did.did`;
+    const index_did = `${input.target_dir_path}/index.did`;
     const did = generate_bind("did");
     if (did) {
         fs.writeFileSync(index_did, did);
     }
 
-    // run parcel build to generate package
-    const parcel_build_result = exec(`cd ${input.target_dir_path} && npm run build`, { silent: true });
-    if (parcel_build_result.code !== 0) {
-        logger.error(`npm client parcel build error for ${input.did_file_path}: ${parcel_build_result.stderr}`);
+    // run tsc to build ts
+    const tsc_result = exec(`cd ${input.target_dir_path} && npm run build`, { silent: false });
+    if (tsc_result.code !== 0) {
+        logger.error(`npm client tsc error for ${input.did_file_path}: ${tsc_result.stderr}`);
         return;
     }
 }
@@ -102,7 +118,7 @@ const pack_npm_server = (input: PackNpmServerInput) => {
     ensure_dir(input.target_dir_path);
 
     // dir starts from dist, so there is a ../
-    const npm_server_template_dir = `../templates/npm_server`;
+    const npm_server_template_dir = `${templatesDir}/npm_server`;
     // copy all files from npm_server_template_dir to target_dir_path
     fs.cpSync(`${npm_server_template_dir}/`, `${input.target_dir_path}/`, { recursive: true });
 
