@@ -19,7 +19,7 @@ const useDfxIdentity = (name: string) => {
 };
 
 const new_identity = (name: string) => {
-    let result = exec(`dfx identity new ${name}`, { silent: false });
+    let result = exec(`dfx identity new --disable-encryption ${name}`, { silent: false });
     if (result.code !== 0) {
         if (result.stderr.trim().endsWith("Error: Identity already exists.")) {
             logger.debug(`identity for ${name} already created`);
