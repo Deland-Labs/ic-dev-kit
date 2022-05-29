@@ -1,6 +1,6 @@
 {
   "name": "@deland-labs/ic-dev-kit",
-  "version": "0.2.10",
+  "version": "0.3.1",
   "description": "",
   "source": [
     "src/src/index.ts",
