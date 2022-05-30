@@ -136,6 +136,37 @@ const pack_npm_server = (input: PackNpmServerInput) => {
 
 const build_all = async (buildContext: BuildContext) => {
 
+    let out_dfx_json = {
+        "defaults": {
+            "build": {
+                "args": "",
+                "packtool": ""
+            }
+        },
+        "networks": {
+            "local": {
+                "bind": "127.0.0.1:8000",
+                "type": "ephemeral"
+            },
+            "ic": {
+                "providers": ["https://ic0.app"],
+                "type": "persistent"
+            },
+        },
+        "version": 1
+    };
+
+    let canister_node = {};
+
+    for (let name of Object.keys(buildContext.canisters)) {
+        canister_node[name] = {
+            "candid": `assets/${name}.did`,
+            "wasm": `assets/${name}.wasm`,
+            "type": "custom"
+        };
+    }
+    out_dfx_json["canisters"] = canister_node;
+
     // reset package_canister_env dir
     if (fs.existsSync(package_dir)) {
         fs.rmSync(package_dir, { recursive: true })
@@ -172,6 +203,12 @@ const build_all = async (buildContext: BuildContext) => {
                 fs.copyFileSync(wasm_path, `${assert_dir}/${name}.wasm`);
                 // copy did files to canister_env dir
                 fs.copyFileSync(did_path, `${assert_dir}/${name}.did`);
+            }
+            {
+                // out dfx.json
+                const dest_dfx_json = `${canister_env_dir}/dfx.json`;
+                fs.writeFileSync(dest_dfx_json, JSON.stringify(out_dfx_json, null, 2));
+                logger.debug(`Created dfx.json for ${canisterEnv}`);
             }
             {
                 const npm_dir = `${canister_env_dir}/npm`;
