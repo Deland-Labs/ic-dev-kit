@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require("../dist/ic");
+require("../dist/icdev");

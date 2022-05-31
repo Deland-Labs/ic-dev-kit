@@ -35,13 +35,6 @@ export const build = (name: string, options?: CanisterBuildOptions) => {
         throw new Error(`Canister ${name} not found in dfx.json`);
     }
 
-    if (canister["type"] === "custom" && !canister.build) {
-        logger.debug(
-            `Canister ${name} is a custom canister without build scripts, skipping build`
-        );
-        return;
-    }
-
     if (options?.canisterEnv) {
         logger.debug(`Building canister ${name} with canister_env ${options.canisterEnv}`);
         const canisterEnvName = options?.canisterEnv ?? DEFAULT_BUILD_ENV_NAME;
@@ -109,7 +102,7 @@ export const reinstall_code = async (name: string, args?: ArrayBuffer) => {
     const canister: DfxJsonCanister = dfxJson.canisters.get(
         name
     ) as DfxJsonCanister;
-    const wasmPath = get_wasm_path(canister);
+    const wasmPath = get_wasm_path(name, canister);
     const buffer = fs.readFileSync(wasmPath);
     const canister_id = get_id(name);
     const agent = new HttpAgent(identityFactory.getIdentity()!.agentOptions);

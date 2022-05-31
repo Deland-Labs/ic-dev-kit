@@ -10,11 +10,11 @@ export interface DfxJsonCanister {
     pack_config?: DfxPackageCanister;
 }
 
-export const get_wasm_path = (canister: DfxJsonCanister): string => {
+export const get_wasm_path = (name:string, canister: DfxJsonCanister): string => {
     if (canister?.wasm) {
         return canister.wasm;
     }
-    return `target/wasm32-unknown-unknown/release/${canister.package}.wasm`;
+    return `target/wasm32-unknown-unknown/release/${name}.wasm`;
 };
 
 export interface DfxJson {

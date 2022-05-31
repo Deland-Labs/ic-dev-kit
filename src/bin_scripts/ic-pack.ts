@@ -190,7 +190,7 @@ const build_all = async (buildContext: BuildContext) => {
         logger.debug(`build canister_env ${canisterEnv}, isProductionEnv: ${isProductionEnv}`);
 
         for (let [name, canister_json] of Object.entries(buildContext.canisters)) {
-            const wasm_path = get_wasm_path(canister_json);
+            const wasm_path = get_wasm_path(name, canister_json);
             const did_path = canister_json.candid;
             // copy did and wasm to assets dir
             {
