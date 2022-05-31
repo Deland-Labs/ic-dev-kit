@@ -4,14 +4,14 @@
   "description": "",
   "source": [
     "src/src/index.ts",
-    "src/ic.ts"
+    "src/icdev.ts"
   ],
   "targets": {
     "main": {
       "source": "src/src/index.ts"
     },
-    "ic": {
-      "source": "src/ic.ts",
+    "icdev": {
+      "source": "src/icdev.ts",
       "engines": {
         "node": ">=16.0.0"
       }
