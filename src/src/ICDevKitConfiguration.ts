@@ -11,12 +11,15 @@ export interface ICDevKitConfigurationIdentitySection {
     default_identity: string;
 }
 
-export interface ICDevKitConfigurationCanisterSection {
-    production_env: string;
+export interface ICDevKitConfigurationCanisterSectionItem {
+    /// canister package to be install. e.g. @deland-labs/ic_ledger_server
+    package: string,
+    install: { command: string } | { parameter: object },
 }
 
 export interface ICDevKitConfiguration {
     identity: ICDevKitConfigurationIdentitySection;
+    install_canisters: Map<string, ICDevKitConfigurationCanisterSectionItem>;
 }
 
 export const LoadICDevKitConfiguration = (): ICDevKitConfiguration => {

@@ -9,6 +9,11 @@
       "type": "rust",
       "package": "one_way_caller",
       "candid": "canisters/one_way_caller/src/one_way_caller.did"
+    },
+    "ledger": {
+      "type": "custom",
+      "candid": "node_modules/@deland-labs/ic_ledger_server/index.did",
+      "wasm": "ledger.wasm"
     }
   },
   "defaults": {

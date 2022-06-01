@@ -121,14 +121,24 @@ export const reinstall_code = async (name: string, args?: ArrayBuffer) => {
     console.info(`${name} reinstalled`);
 };
 
-export const addMainAsController = async () => {
+export const addMainAsController = async (name?: string) => {
     // add main identity as controller of all canisters
-    const update_result = exec(
-        `dfx canister update-settings --all --add-controller ${identityFactory.getPrincipal()}`
-    );
-    if (update_result.code !== 0) {
-        throw new Error(update_result.stderr);
+    if (name) {
+        const update_result = exec(
+            `dfx canister update-settings ${name} --add-controller ${identityFactory.getPrincipal()}`
+        );
+        if (update_result.code !== 0) {
+            throw new Error(update_result.stderr);
+        }
+    } else {
+        const update_result = exec(
+            `dfx canister update-settings --all --add-controller ${identityFactory.getPrincipal()}`
+        );
+        if (update_result.code !== 0) {
+            throw new Error(update_result.stderr);
+        }
     }
+
 };
 
 export const get_id = (name: string) => {

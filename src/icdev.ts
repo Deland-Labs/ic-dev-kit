@@ -10,7 +10,8 @@ import { execute_task_pack } from './bin_scripts/ic-pack';
 import { DEFAULT_BUILD_ENV_NAME, DEFAULT_DECLARATIONS_OUT_DIR, DEFAULT_PACKAGE_SCOPE, DEFAULT_PACKAGE_VERSION, DEFAULT_PRODUCTION_ENV } from './src/defaults';
 import logger from 'node-color-log';
 import { execute_task_get_account_id } from './bin_scripts/ic-get-account-id';
-import { ICPackInput } from './src/types';
+import { ICPackInput, IInstallCanisterInput } from './src/types';
+import { execute_task_install_canister } from "./bin_scripts/ic-install-canister";
 const program = new Command();
 
 program
@@ -94,5 +95,19 @@ program
     .description('get account id from a principal')
     .argument('<principal>', 'principal')
     .action((principal) => { execute_task_get_account_id(principal) })
+
+
+program
+    .command('install-canister')
+    .description('install canister package from configuration')
+    .option('-n, --name <name>', 'name of the canister')
+    .action(async (options, command) => {
+
+        const input: IInstallCanisterInput = {
+            name: options.name,
+        };
+        logger.debug(input);
+        execute_task_install_canister(input);
+    })
 
 program.parse(process.argv);
