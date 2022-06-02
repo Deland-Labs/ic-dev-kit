@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "@deland-labs/dft_all_features_server": "^0.6.0",
+    "@deland-labs/dft_basic_server": "^0.6.0",
+    "@deland-labs/dft_burnable_server": "^0.6.0",
+    "@deland-labs/dft_mintable_server": "^0.6.0",
     "@deland-labs/ic_ledger_server": "^0.10.0",
     "@deland-labs/ic-bin-tools": "0.1.1",
     "@deland-labs/ic-dev-kit": "file:.."
