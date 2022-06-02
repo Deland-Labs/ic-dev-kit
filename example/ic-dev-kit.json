@@ -2,5 +2,22 @@
     "identity": {
         "pem_source_dir": "./ic-dev-kit/pem/",
         "default_identity": "default"
+    },
+    "install_canisters": {
+        "ledger": {
+            "package": "@deland-labs/ic_ledger_server",
+            "install": {
+                "parameter": {
+                    "send_whitelist": [],
+                    "minting_account": "6325fc2d06e4d5723d6a9cf9b88c556a2a2b1d5a337495b3283b00c9942462cc",
+                    "initial_values": [
+                        {
+                            "account": "6325fc2d06e4d5723d6a9cf9b88c556a2a2b1d5a337495b3283b00c9942462cc",
+                            "icpts": "100000000000000000"
+                        }
+                    ]
+                }
+            }
+        }
     }
 }

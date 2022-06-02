@@ -34,3 +34,8 @@ export interface ICInitIdentityInput {
 export interface ICShowPrincipalInput {
     name?: string;
 }
+
+export interface IInstallCanisterInput {
+    name?: string;
+}
+

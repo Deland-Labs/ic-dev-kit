@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@deland-labs/ic_ledger_server": "^0.10.0",
     "@deland-labs/ic-bin-tools": "0.1.1",
     "@deland-labs/ic-dev-kit": "file:.."
   }

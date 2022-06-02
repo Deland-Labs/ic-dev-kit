@@ -10,7 +10,7 @@ export interface DfxJsonCanister {
     pack_config?: DfxPackageCanister;
 }
 
-export const get_wasm_path = (name:string, canister: DfxJsonCanister): string => {
+export const get_wasm_path = (name: string, canister: DfxJsonCanister): string => {
     if (canister?.wasm) {
         return canister.wasm;
     }
@@ -105,3 +105,32 @@ export const DEFAULT_DFX_PACKAGE_JSON = {
         "canister_env": "production"
     }],
 };
+
+
+export interface addCanisterToDfxJsonInput {
+    name: string;
+    type: string;
+    candid: string;
+    wasm: string;
+}
+
+export enum AddCanisterToDfxJsonStatus {
+    Success,
+    CanisterExists,
+}
+
+export const addCanisterToDfxJson = (input: addCanisterToDfxJsonInput, dfxJsonPath?: string): AddCanisterToDfxJsonStatus => {
+    const dfxJsonFilepath = dfxJsonPath ?? "./dfx.json";
+    let json = fs.readFileSync(dfxJsonFilepath, "utf8");
+    const dfxJson = JSON.parse(json);
+    if (!dfxJson['canisters'].hasOwnProperty(input.name)) {
+        dfxJson['canisters'][input.name] = {
+            type: input.type,
+            candid: input.candid,
+            wasm: input.wasm,
+        };
+        fs.writeFileSync(dfxJsonFilepath, JSON.stringify(dfxJson, null, 2));
+        return AddCanisterToDfxJsonStatus.Success;
+    }
+    return AddCanisterToDfxJsonStatus.CanisterExists;
+}
