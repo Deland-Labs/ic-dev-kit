@@ -36,7 +36,7 @@ async function installCanister(name: string, config: ICDevKitConfigurationCanist
         name,
         type: 'custom',
         candid: `node_modules/${config.package}/index.did`,
-        wasm: `node_modules/${config.package}/ledger.wasm`,
+        wasm: `node_modules/${config.package}/index.wasm`,
     });
     if (status == AddCanisterToDfxJsonStatus.Success) {
         canister.create(name);
