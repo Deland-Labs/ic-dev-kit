@@ -59,7 +59,7 @@ export const buildInCanisterParameterParser = {
                 node_max_memory_size_bytes: p.archive_options.node_max_memory_size_bytes ? [BigInt(p.archive_options.node_max_memory_size_bytes)] : [],
                 controller_id: Principal.fromText(p.archive_options.controller_id)
             }] : [],
-            initial_values: p.initial_values ? p.initial_values.map(x => [Principal.fromText(x.account), { e8s: BigInt(x.icpts) }]) : []
+            initial_values: p.initial_values ? p.initial_values.map(x => [x.account, { e8s: BigInt(x.icpts) }]) : []
         }
 
         return IDL.encode(icLedgerInit({ IDL }), [args]);

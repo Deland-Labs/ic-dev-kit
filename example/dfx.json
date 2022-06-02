@@ -13,7 +13,7 @@
     "ledger": {
       "type": "custom",
       "candid": "node_modules/@deland-labs/ic_ledger_server/index.did",
-      "wasm": "ledger.wasm"
+      "wasm": "node_modules/@deland-labs/ic_ledger_server/index.wasm"
     }
   },
   "defaults": {
