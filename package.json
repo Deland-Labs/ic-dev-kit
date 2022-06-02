@@ -93,7 +93,7 @@
     "events": "^3.3.0",
     "jest": "^28.1.0",
     "jest-localstorage-mock": "^2.4.21",
-    "lint-staged": "12.4.3",
+    "lint-staged": "12.5.0",
     "open-cli": "^7.0.1",
     "os-browserify": "^0.3.0",
     "parcel": "^2.6.0",
