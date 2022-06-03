@@ -1,5 +1,21 @@
 {
-  "canisters": {},
+  "canisters": {
+    "ledger": {
+      "exclude_in_package": true
+    },
+    "token1": {
+      "exclude_in_package": true
+    },
+    "token2": {
+      "exclude_in_package": true
+    },
+    "token3": {
+      "exclude_in_package": true
+    },
+    "token4": {
+      "exclude_in_package": true
+    }
+  },
   "envs": [
     {
       "name": "dev",

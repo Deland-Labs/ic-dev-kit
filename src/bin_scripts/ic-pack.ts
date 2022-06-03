@@ -62,20 +62,20 @@ const pack_npm_client = (input: PackNpmClientInput) => {
     const generate_bind = (target: string) => {
         let result = exec(`npx ic-didc bind ${input.did_file_path} --target ${target}`, { silent: true });
         if (result.code !== 0) {
-            logger.error(`npm client generate bind error for ${input.did_file_path}: ${result.stderr}`);
+            logger.error(`npm client generate bind error for ${input.did_file_path}: ${result.stdout}`);
             return "";
         }
         return result.stdout;
     }
     // generate index.ts from js binding
-    const index_js = `${input.target_dir_path}/index.ts`;
+    const index_js = `${input.target_dir_path}/idl.ts`;
     const js = generate_bind("js");
     if (js) {
         fs.writeFileSync(index_js, js);
     }
 
     // generate index.d.ts
-    const index_d_ts = `${input.target_dir_path}/index.d.ts`;
+    const index_d_ts = `${input.target_dir_path}/interface.ts`;
     const d_ts = generate_bind("ts");
     if (d_ts) {
         fs.writeFileSync(index_d_ts, d_ts);
