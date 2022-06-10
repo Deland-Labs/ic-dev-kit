@@ -7,10 +7,11 @@ import {
     ICDevKitConfigurationIdentitySection,
     LoadICDevKitConfiguration
 } from "./ICDevKitConfiguration";
+import os from "os";
 
 function get_pem_path(name: string): string {
     // get current home directory
-    const home = process.env.HOME;
+    const home = os.homedir();
     return `${home}/.config/dfx/identity/${name}/identity.pem`;
 }
 
