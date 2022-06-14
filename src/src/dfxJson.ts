@@ -6,6 +6,7 @@ export interface DfxJsonCanister {
     candid: string;
     dependencies?: string[];
     wasm?: string;
+    
     build?: string[];
     pack_config?: DfxPackageCanister;
 }
@@ -59,6 +60,7 @@ export interface DfxPackageJson {
 
 export interface DfxPackageCanister {
     exclude_in_package?: boolean;
+    exclude_in_integration_package?: boolean;
     pack_npm_client?: boolean;
     pack_npm_server?: boolean;
 }

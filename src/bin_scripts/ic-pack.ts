@@ -159,11 +159,16 @@ const build_all = async (buildContext: BuildContext) => {
     let canister_node = {};
 
     for (let name of Object.keys(buildContext.canisters)) {
-        canister_node[name] = {
-            "candid": `assets/${name}.did`,
-            "wasm": `assets/${name}.wasm`,
-            "type": "custom"
-        };
+        const canister = buildContext.canisters[name];
+        if (canister.pack_config?.exclude_in_integration_package == true) {
+            logger.debug(`package ${name} is exclude_in_integration_package`)
+        } else {
+            canister_node[name] = {
+                "candid": `assets/${name}.did`,
+                "wasm": `assets/${name}.wasm`,
+                "type": "custom"
+            };
+        }
     }
     out_dfx_json["canisters"] = canister_node;
 
@@ -193,7 +198,9 @@ const build_all = async (buildContext: BuildContext) => {
             const wasm_path = get_wasm_path(name, canister_json);
             const did_path = canister_json.candid;
             // copy did and wasm to assets dir
-            {
+            if (canister_json.pack_config?.exclude_in_integration_package == true) {
+                logger.debug(`package ${name} is exclude_in_integration_package`)
+            } else {
                 canister.build(name, {
                     canisterEnv: canisterEnv,
                     canisterEnvName: buildContext.icPackInput.canisterEnvName
@@ -210,7 +217,9 @@ const build_all = async (buildContext: BuildContext) => {
                 fs.writeFileSync(dest_dfx_json, JSON.stringify(out_dfx_json, null, 2));
                 logger.debug(`Created dfx.json for ${canisterEnv}`);
             }
-            {
+            if (canister_json.pack_config?.exclude_in_package == true) {
+                logger.debug(`package ${name} is exclude_in_package`)
+            } else {
                 const npm_dir = `${canister_env_dir}/npm`;
                 const packageScope = buildContext.icPackInput.packageScope;
                 ensure_dir(npm_dir);
@@ -334,19 +343,10 @@ export const execute_task_pack = async (input: ICPackInput) => {
     logger.info(`There are canister listed in dfx.json: ${canisters_keys}`);
 
     // filter canister those not exclude in package
-    const exclude_canisters: string[] = [];
     const canisters = {};
 
     for (const [name, canister] of dfxJson.canisters.entries()) {
-        if (canister.pack_config?.exclude_in_package) {
-            exclude_canisters.push(name);
-            continue;
-        }
         canisters[name] = canister;
-    }
-
-    if (exclude_canisters.length > 0) {
-        logger.info(`Exclude canisters: ${exclude_canisters.join(", ")}`);
     }
 
     const all_envs = new Set(dfxPackageJson.envs.map(env => env.canister_env));

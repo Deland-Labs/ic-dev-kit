@@ -13,7 +13,7 @@
       "exclude_in_package": true
     },
     "token4": {
-      "exclude_in_package": true
+      "exclude_in_integration_package": true
     }
   },
   "envs": [

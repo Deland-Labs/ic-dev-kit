@@ -15,15 +15,13 @@ import { ICShowPrincipalInput } from "./types";
 import { identityInitialization } from "./identityInitialization";
 import os from "os";
 
-function get_pem_path(name: string): string {
+export const getPemPath = (name: string): string => {
     // get current home directory
     const home = os.homedir();
     return `${home}/.config/dfx/identity/${name}/identity.pem`;
 }
 
-function load(name: string): Identity {
-    // get current home directory
-    const pem_path = get_pem_path(name);
+export const loadIdentityPem = (pem_path: string): Identity => {
     const rawKey = fs
         .readFileSync(pem_path)
         .toString()
@@ -31,12 +29,15 @@ function load(name: string): Identity {
         .replace("-----END EC PRIVATE KEY-----", "")
         .trim();
 
-    // @ts-ignore
-    const rawBuffer = Uint8Array.from(rawKey).buffer;
-
     const privKey = Uint8Array.from(sha256(rawKey, { asBytes: true }));
     // Initialize an identity from the secret key
     return Secp256k1KeyIdentity.fromSecretKey(Uint8Array.from(privKey).buffer);
+}
+
+export const load = (name: string): Identity => {
+    // get current home directory
+    const pem_path = getPemPath(name);
+    return loadIdentityPem(pem_path);
 }
 
 export const useDfxIdentity = (name: string) => {
