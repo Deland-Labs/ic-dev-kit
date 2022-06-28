@@ -5,7 +5,7 @@
     "@deland-labs/dft_burnable_server": "^0.6.0",
     "@deland-labs/dft_mintable_client": "^0.6.0",
     "@deland-labs/dft_mintable_server": "^0.6.0",
-    "@deland-labs/ic_ledger_server": "^0.10.0",
+    "@deland-labs/ic_ledger_server": "0.10.1",
     "@deland-labs/ic-bin-tools": "0.1.1",
     "@deland-labs/ic-dev-kit": "file:.."
   }
