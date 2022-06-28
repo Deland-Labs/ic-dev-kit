@@ -37,8 +37,10 @@ export const build = (name: string, options?: CanisterBuildOptions) => {
 
     if (options?.canisterEnv) {
         logger.debug(`Building canister ${name} with canister_env ${options.canisterEnv}`);
-        const canisterEnvName = options?.canisterEnv ?? DEFAULT_BUILD_ENV_NAME;
-        exec(`${canisterEnvName}=${options.canisterEnv} dfx build ${name}`);
+        const canisterEnvName = options?.canisterEnvName ?? DEFAULT_BUILD_ENV_NAME;
+        const command = `${canisterEnvName}=${options.canisterEnv} dfx build ${name}`;
+        logger.info(`executing ${command}`);
+        exec(command);
     } else {
         logger.debug(`Building canister ${name}`);
         const result = exec(`dfx build ${name}`);
