@@ -2,21 +2,7 @@
   "name": "@deland-labs/ic-dev-kit",
   "version": "0.5.7",
   "description": "",
-  "source": [
-    "src/src/index.ts",
-    "src/icdev.ts"
-  ],
-  "targets": {
-    "main": {
-      "source": "src/src/index.ts"
-    },
-    "icdev": {
-      "source": "src/icdev.ts",
-      "engines": {
-        "node": ">=16.0.0"
-      }
-    }
-  },
+  "source": "src/src/index.ts",
   "main": "dist/main.js",
   "module": "dist/module.js",
   "types": "dist/types.d.ts",

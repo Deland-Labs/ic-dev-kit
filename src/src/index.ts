@@ -43,3 +43,7 @@ export const tasks = {
     ...icShowPrincipal,
     ...icUpdateDid
 }
+
+export const runCli = ()=>{
+    require("../icdev")
+}

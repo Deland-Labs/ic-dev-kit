@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require("../dist/icdev");
+require("../dist/main").runCli();
