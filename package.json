@@ -12,7 +12,8 @@
     "pack-docs": "rm -rf docs/  && typedoc src/src/",
     "build": "npm run pack-dist",
     "prepublishOnly": "npm test  &&  npm run build",
-    "start": "npm run pack-docs  &&  open-cli docs/index.html"
+    "start": "npm run pack-docs  &&  open-cli docs/index.html",
+    "lint:eslint": "eslint --fix src/src/"
   },
   "repository": {
     "type": "git",
@@ -71,6 +72,8 @@
     "@types/shelljs": "0.8.11",
     "@typescript-eslint/eslint-plugin": "5.30.0",
     "@typescript-eslint/parser": "5.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "assert": "2.0.0",
     "browserify-zlib": "0.2.0",
     "constants-browserify": "1.0.0",
