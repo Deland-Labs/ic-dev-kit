@@ -9,6 +9,31 @@
       "type": "rust",
       "package": "one_way_caller",
       "candid": "canisters/one_way_caller/src/one_way_caller.did"
+    },
+    "ledger": {
+      "type": "custom",
+      "candid": "node_modules/@deland-labs/ic_ledger_server/index.did",
+      "wasm": "node_modules/@deland-labs/ic_ledger_server/index.wasm"
+    },
+    "token1": {
+      "type": "custom",
+      "candid": "node_modules/@deland-labs/dft_all_features_server/index.did",
+      "wasm": "node_modules/@deland-labs/dft_all_features_server/index.wasm"
+    },
+    "token2": {
+      "type": "custom",
+      "candid": "node_modules/@deland-labs/dft_basic_server/index.did",
+      "wasm": "node_modules/@deland-labs/dft_basic_server/index.wasm"
+    },
+    "token3": {
+      "type": "custom",
+      "candid": "node_modules/@deland-labs/dft_burnable_server/index.did",
+      "wasm": "node_modules/@deland-labs/dft_burnable_server/index.wasm"
+    },
+    "token4": {
+      "type": "custom",
+      "candid": "node_modules/@deland-labs/dft_mintable_server/index.did",
+      "wasm": "node_modules/@deland-labs/dft_mintable_server/index.wasm"
     }
   },
   "defaults": {
