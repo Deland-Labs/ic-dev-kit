@@ -5,7 +5,7 @@ import * as canister from "../src/canister";
 import logger from "node-color-log";
 import { exec } from "shelljs";
 import { ICPackInput } from "../src/types";
-import {code_format} from "./utls";
+import {code_format, code_format2} from "./utls";
 
 const package_dir = "package"
 
@@ -83,7 +83,7 @@ const pack_npm_client = async (input: PackNpmClientInput) => {
     }
     // format interface.ts
     logger.debug(`Formatting ${index_d_ts}`);
-    await code_format(index_d_ts);
+    code_format2(index_d_ts);
 
     // generate index.did
     const index_did = `${input.target_dir_path}/index.did`;
