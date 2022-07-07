@@ -1,4 +1,3 @@
-
 // This file may be used to polyfill features that aren't available in the test
 // environment, i.e. JSDom.
 //
@@ -14,5 +13,5 @@ global.TextDecoder = require("text-encoding").TextDecoder; // eslint-disable-lin
 global.fetch = require("node-fetch");
 // @ts-ignore
 BigInt.prototype.toJSON = function () {
-    return this.toString();
+  return this.toString();
 };
