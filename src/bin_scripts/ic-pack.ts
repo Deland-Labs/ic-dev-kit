@@ -5,6 +5,7 @@ import * as canister from "../src/canister";
 import logger from "node-color-log";
 import { exec } from "shelljs";
 import { ICPackInput } from "../src/types";
+import {code_format} from "./utls";
 
 const package_dir = "package"
 
@@ -79,6 +80,8 @@ const pack_npm_client = (input: PackNpmClientInput) => {
     const d_ts = generate_bind("ts");
     if (d_ts) {
         fs.writeFileSync(index_d_ts, d_ts);
+
+        code_format(index_d_ts);
     }
 
     // generate index.did

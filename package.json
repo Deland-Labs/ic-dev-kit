@@ -51,7 +51,8 @@
     "node-fetch": "^2.6.7",
     "sha256": "^0.2.0",
     "shelljs": "^0.8.5",
-    "text-encoding": "^0.7.0"
+    "text-encoding": "^0.7.0",
+    "typescript-formatter": "^7.2.2"
   },
   "peerDependencies": {
     "@deland-labs/ic-bin-tools": "0.1.1",
