@@ -9,15 +9,15 @@ export const code_format = async (file_path : string) =>{
         .processFiles([file_path], {
             dryRun: true,
             replace: true,
-            verify: false,
+            verify: true,
             tsconfig: true,
-            tsconfigFile: null,
-            tslint: true,
+            tsconfigFile: '../../tsconfig.json',
+            tslint: false,
             tslintFile: null,
             editorconfig: true,
             vscode: false,
             vscodeFile: null,
-            tsfmt: true,
+            tsfmt: false,
             tsfmtFile: null,
         });
     logger.debug(`code_format ${file_path} done`);
