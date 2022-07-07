@@ -3,8 +3,8 @@ import * as tsfmt from "typescript-formatter";
 
 
 
-export const code_format = (file_path : string) =>{
-    tsfmt
+export const code_format = async (file_path : string) =>{
+    await tsfmt
         .processFiles([file_path], {
             dryRun: true,
             replace: true,
@@ -18,8 +18,6 @@ export const code_format = (file_path : string) =>{
             vscodeFile: null,
             tsfmt: true,
             tsfmtFile: null,
-        })
-        .then(result =>{
-            console.log(`code_format path:${file_path} result: ${JSON.stringify(result)}`);
         });
+    console.debug(`code_format ${file_path} done`);
 }

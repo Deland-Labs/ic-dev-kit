@@ -39,7 +39,7 @@ const templatesDir = (() => {
     }
 })()
 
-const pack_npm_client = (input: PackNpmClientInput) => {
+const pack_npm_client = async (input: PackNpmClientInput) => {
     if (!fs.existsSync(input.did_file_path)) {
         logger.warn(`${input.did_file_path} not found`);
         return;
@@ -82,7 +82,7 @@ const pack_npm_client = (input: PackNpmClientInput) => {
         fs.writeFileSync(index_d_ts, d_ts);
     }
     // format interface.ts
-    code_format(index_d_ts);
+    await code_format(index_d_ts);
 
     // generate index.did
     const index_did = `${input.target_dir_path}/index.did`;
