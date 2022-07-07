@@ -80,9 +80,9 @@ const pack_npm_client = (input: PackNpmClientInput) => {
     const d_ts = generate_bind("ts");
     if (d_ts) {
         fs.writeFileSync(index_d_ts, d_ts);
-
-        code_format(index_d_ts);
     }
+    // format interface.ts
+    code_format(index_d_ts);
 
     // generate index.did
     const index_did = `${input.target_dir_path}/index.did`;
