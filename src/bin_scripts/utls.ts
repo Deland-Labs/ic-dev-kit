@@ -19,6 +19,7 @@ export const code_format = async (file_path : string) =>{
             vscodeFile: null,
             tsfmt: false,
             tsfmtFile: null,
-        });
-    logger.debug(`code_format ${file_path} done`);
+        }).then(result =>{
+        logger.debug(result["./index.ts"].dest);
+    });
 }
