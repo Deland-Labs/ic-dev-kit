@@ -74,3 +74,11 @@ impl Display for ErrorInfo {
         write!(f, "{} {}", self.code, self.message)
     }
 }
+
+candid::export_service!();
+
+#[query(name = "__get_candid_interface_tmp_hack")]
+#[candid_method(query, rename = "__get_candid_interface_tmp_hack")]
+fn __export_did_tmp_() -> String {
+    __export_service()
+}
