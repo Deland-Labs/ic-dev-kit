@@ -82,6 +82,7 @@ const pack_npm_client = async (input: PackNpmClientInput) => {
         fs.writeFileSync(index_d_ts, d_ts);
     }
     // format interface.ts
+    logger.debug(`Formatting ${index_d_ts}`);
     await code_format(index_d_ts);
 
     // generate index.did

@@ -1,4 +1,5 @@
 import * as tsfmt from "typescript-formatter";
+import logger from "node-color-log";
 
 
 
@@ -19,5 +20,5 @@ export const code_format = async (file_path : string) =>{
             tsfmt: true,
             tsfmtFile: null,
         });
-    console.debug(`code_format ${file_path} done`);
+    logger.debug(`code_format ${file_path} done`);
 }
