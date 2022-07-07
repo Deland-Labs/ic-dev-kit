@@ -1,3 +1,9 @@
+type BooleanActorResponse = variant { Ok : bool; Err : ErrorInfo };
+type ErrorInfo = record { code : nat32; message : text };
 service : {
-    test_one_way_caller : (principal, principal) -> ();
+  test_one_way_caller : (principal, principal) -> ();
+  test_one_way_response : (principal, principal) -> (BooleanActorResponse);
+  test_one_way_response_error : (principal, principal) -> (
+      BooleanActorResponse,
+    );
 }

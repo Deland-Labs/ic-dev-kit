@@ -1,3 +1,1 @@
-service : {
-    test_one_way : (principal) -> () oneway
-}
+service : { test_one_way : (principal) -> () oneway }
