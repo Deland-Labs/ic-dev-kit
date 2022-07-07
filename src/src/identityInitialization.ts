@@ -19,18 +19,6 @@ const useDfxIdentity = (name: string) => {
     exec(`dfx identity use ${name}`, { silent: true });
 };
 
-const new_identity = (name: string) => {
-    let result = exec(`dfx identity new --disable-encryption ${name}`, { silent: false });
-    if (result.code !== 0) {
-        if (result.stderr.trim().endsWith("Error: Identity already exists.")) {
-            logger.debug(`identity for ${name} already created`);
-        } else {
-            logger.error(result.stderr);
-            throw new Error(`Failed to create new identity ${name}`);
-        }
-    }
-}
-
 export class IdentityInitialization {
     private _configuration: ICDevKitConfigurationIdentitySection;
 
@@ -39,22 +27,29 @@ export class IdentityInitialization {
     }
 
     import_identity = (name: string) => {
-        new_identity(name);
-        // override static key file from scripts/identity_pem/${name}/identity.pem
-        let target_pem_path = get_pem_path(name);
-        {    // chmod 777 for target_pem_path
-            let result = exec(`chmod 777 ${target_pem_path}`, { silent: false });
-            if (result.code !== 0) {
-
-                logger.error(result.stderr);
-                throw new Error(`Failed to chmod 777 ${target_pem_path}`);
-            }
-        }
         let source_pem_path = `${this._configuration.pem_source_dir}/${name}.pem`;
         if (!fs.existsSync(source_pem_path)) {
             logger.warn(`there is no identity.pem in ${source_pem_path}, it could be unstable for dev env`);
         } else {
-            fs.copyFileSync(source_pem_path, target_pem_path);
+            {
+                const result = exec(`dfx identity import ${name} ${source_pem_path} --disable-encryption --force`, { silent: false });
+                if (result.code !== 0) {
+
+                    logger.error(result.stderr);
+                    throw new Error(`Failed to import identity ${source_pem_path}`);
+                }
+            }
+            {
+                let target_pem_path = get_pem_path(name);
+                {    // chmod 777 for target_pem_path
+                    let result = exec(`chmod 777 ${target_pem_path}`, { silent: false });
+                    if (result.code !== 0) {
+
+                        logger.error(result.stderr);
+                        throw new Error(`Failed to chmod 777 ${target_pem_path}`);
+                    }
+                }
+            }
         }
     }
 
