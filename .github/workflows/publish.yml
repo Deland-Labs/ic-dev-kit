@@ -18,10 +18,9 @@ jobs:
       - run: |
           npm config set always-auth true
           npm config set registry https:${REGISTRY}
-          npm config set ${REGISTRY}:_authToken ${{ secrets.MY_GET_TOKEN }}
-          npm config set @deland-labs:registry https:${REGISTRY}
+          npm config set ${REGISTRY}:_authToken ${{ secrets.GITLAB_PACKAGE_TOKEN }}
         env: 
-          REGISTRY: //www.myget.org/F/ic-feed/npm/
+          REGISTRY: //gitlab.com/api/v4/projects/37663507/packages/npm/
       - run: | 
           Version=$(git describe --tags --abbrev=0)
           yarn publish --frozen-lockfile --non-interactive --no-git-tag-version --no-commit-hooks --new-version ${Version}
