@@ -1,9 +1,10 @@
 [toolchain]
-channel = "stable"
+channel = "1.62.1"
 components = [
     "rustc",
     "rust-std",
     "rustfmt",
+    "llvm-tools-preview",
+    "clippy",
 ]
 targets = ["wasm32-unknown-unknown"]
-profile = "minimal"

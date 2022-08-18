@@ -1,0 +1,1 @@
+npx icdev update-did

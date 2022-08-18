@@ -1,8 +1,6 @@
-use std::future::Future;
-
 use candid::{candid_method, decode_args, encode_args, Principal};
-use ic_cdk::{api, trap};
-use ic_cdk::api::call::{call_raw, CallResult};
+use ic_cdk::api;
+use ic_cdk::api::call::call_raw;
 use ic_cdk_macros::*;
 use crate::nft::{Fungible, FungibleUser, Metadata, NonFungible, TokenIdentifier};
 
@@ -47,4 +45,11 @@ fn metadata_fungible(token: TokenIdentifier) -> Metadata {
         metadata: Some("test".as_bytes().to_vec()),
     });
     metadata
+}
+
+candid::export_service!();
+#[query(name = "__get_candid_interface_tmp_hack")]
+#[candid_method(query, rename = "__get_candid_interface_tmp_hack")]
+fn __export_did_tmp_() -> String {
+    __export_service()
 }

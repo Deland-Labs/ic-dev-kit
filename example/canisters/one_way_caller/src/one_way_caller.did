@@ -1,3 +1,15 @@
+type Fungible = record {
+  decimals : TokenIdentifier;
+  metadata : opt vec nat8;
+  name : FungibleUser;
+  symbol : principal;
+};
+type FungibleUser = variant { "principal" : principal; address : text };
+type Metadata = variant { fungible : Fungible; nonfungible : NonFungible };
+type NonFungible = record { metadata : opt vec nat8 };
+type TokenIdentifier = record { value : text };
 service : {
-    test_one_way_caller : (principal, principal) -> ();
+  metadata_fungible : (TokenIdentifier) -> (Metadata) query;
+  metadata_non_fungible : (TokenIdentifier) -> (Metadata) query;
+  test_one_way_caller : (principal, principal) -> ();
 }
