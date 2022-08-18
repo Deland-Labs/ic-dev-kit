@@ -20,6 +20,7 @@ const download_did = async (canister) => {
     let did_content = source_content.substring(start, end);
     // replace \\n with \n
     did_content = did_content.replace(/\\n/g, "\n");
+    did_content = did_content.replace(/\\"/g, "\"");
     return did_content;
 };
 
