@@ -1,11 +1,12 @@
 name: Build
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, reopened, synchronize]
+# disable for saving bill
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     types: [opened, reopened, synchronize]
 
 jobs:
   build:
