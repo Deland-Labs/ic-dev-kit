@@ -71,7 +71,7 @@
     "@parcel/transformer-typescript-tsc": "2.6.2",
     "@parcel/transformer-typescript-types": "2.6.2",
     "@types/lodash": "4.14.182",
-    "@types/sha256": "0.2.0",
+    "@types/sha256": "0.2.2",
     "@types/shelljs": "0.8.11",
     "@typescript-eslint/eslint-plugin": "5.30.7",
     "@typescript-eslint/parser": "5.30.7",
