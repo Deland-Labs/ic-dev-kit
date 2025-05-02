@@ -23,7 +23,7 @@ const ensure_dir = (dir: string) => {
 
 const templatesDir = (() => {
     // templates installed from node_modules
-    const node_modules_templates = `./node_modules/@deland-labs/ic-dev-kit/ic_npm_templates`;
+    const node_modules_templates = `./node_modules/@delandlabs/ic-dev-kit/ic_npm_templates`;
     if (fs.existsSync(node_modules_templates)) {
         return node_modules_templates;
     }

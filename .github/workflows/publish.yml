@@ -1,26 +1,31 @@
-name: publish Node.js Package
+name: publish packages to npm
 on:
   release:
     types: [published]
+  push:
+    branches:
+      - npm-release
 jobs:
   Build-and-Publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           registry-url: https://npm.pkg.github.com
           cache: yarn
-
       - run: |
-          yarn install --frozen-lockfile
+          npm config set ${REGISTRY}:_authToken ${{ secrets.NPM_PACKAGE_TOKEN }}
+          npm config set @delandlabs:registry https:${REGISTRY}
+        env:
+          REGISTRY: //registry.npmjs.org/
       - run: |
-          npm config set always-auth true
-          npm config set registry https:${REGISTRY}
-          npm config set ${REGISTRY}:_authToken ${{ secrets.GITLAB_PACKAGE_TOKEN }}
-        env: 
-          REGISTRY: //gitlab.com/api/v4/projects/37663507/packages/npm/
-      - run: | 
           Version=$(git describe --tags --abbrev=0)
-          yarn publish --frozen-lockfile --non-interactive --no-git-tag-version --no-commit-hooks --new-version ${Version}
+          echo Version: $Version
+          export VITE_RELEASE_VERSION=$Version
+
+          yarn install --frozen-lockfile
+
+          yarn publish --frozen-lockfile --non-interactive --no-git-tag-version --no-commit-hooks --new-version ${Version} --access public
+
