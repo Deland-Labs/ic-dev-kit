@@ -1,5 +1,5 @@
 {
-  "name": "@deland-labs/ic-dev-kit",
+  "name": "@delandlabs/ic-dev-kit",
   "version": "0.6.7",
   "description": "",
   "source": "src/src/index.ts",
@@ -40,11 +40,10 @@
     "icdev": "./src/entrypoint.js"
   },
   "dependencies": {
-    "@dfinity/agent": ">=0.11.0",
-    "@dfinity/authentication": ">=0.11.0",
-    "@dfinity/candid": ">=0.11.0",
-    "@dfinity/identity": ">=0.11.0",
-    "@dfinity/principal": ">=0.11.0",
+    "@dfinity/agent": ">=2.4.1",
+    "@dfinity/candid": ">=2.4.1",
+    "@dfinity/identity": ">=2.4.1",
+    "@dfinity/principal": ">=2.4.1",
     "@trust/webcrypto": "^0.9.2",
     "archiver": "^5.3.1",
     "bignumber.js": "^9.0.2",
@@ -59,12 +58,11 @@
     "text-encoding": "^0.7.0"
   },
   "peerDependencies": {
-    "@deland-labs/ic-bin-tools": ">=0.1.2",
-    "@dfinity/agent": ">=0.11.0",
-    "@dfinity/authentication": ">=0.11.0",
-    "@dfinity/candid": ">=0.11.0",
-    "@dfinity/identity": ">=0.11.0",
-    "@dfinity/principal": ">=0.11.0"
+    "@delandlabs/ic-bin-tools": ">=0.2.0",
+    "@dfinity/agent": ">=2.4.1",
+    "@dfinity/candid": ">=2.4.1",
+    "@dfinity/identity": ">=2.4.1",
+    "@dfinity/principal": ">=2.4.1"
   },
   "devDependencies": {
     "@parcel/packager-ts": "2.6.2",
