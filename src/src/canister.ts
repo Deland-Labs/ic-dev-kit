@@ -1,11 +1,11 @@
-import { exec } from "shelljs";
-import { Actor, CanisterInstallMode, HttpAgent } from "@dfinity/agent";
-import { DfxJsonCanister, get_dfx_json, get_wasm_path } from "./dfxJson";
+import {exec} from "shelljs";
+import {Actor, HttpAgent} from "@dfinity/agent";
+import {DfxJsonCanister, get_dfx_json, get_wasm_path} from "./dfxJson";
 import * as fs from "fs";
-import { identityFactory } from "./identity";
+import {identityFactory} from "./identity";
 import logger from "node-color-log";
-import { Principal } from "@dfinity/principal";
-import { DEFAULT_BUILD_ENV_NAME } from "./defaults";
+import {Principal} from "@dfinity/principal";
+import {DEFAULT_BUILD_ENV_NAME} from "./defaults";
 
 export const create = (name: string) => {
     const result = exec(`dfx canister create ${name}`);
@@ -64,7 +64,7 @@ export const reinstall = (name: string, args?: string) => {
     if (args) {
         const command = `echo yes | dfx canister install --mode reinstall ${name} --argument ${args} `;
         logger.debug(`Running command: ${command}`);
-        result = exec(command, { silent: true });
+        result = exec(command, {silent: true});
     } else {
         result = exec(`echo yes | dfx canister install --mode reinstall ${name}`, {
             silent: true,
@@ -112,7 +112,7 @@ export const reinstall_code = async (name: string, args?: ArrayBuffer) => {
     await Actor.install(
         {
             module: buffer,
-            mode: CanisterInstallMode.Reinstall,
+            mode: {reinstall: null},
             arg: args,
         },
         {
@@ -144,7 +144,7 @@ export const addMainAsController = async (name?: string) => {
 };
 
 export const get_id = (name: string) => {
-    return exec(`dfx canister id ${name}`, { silent: true }).stdout.trim();
+    return exec(`dfx canister id ${name}`, {silent: true}).stdout.trim();
 };
 
 export const get_principal = (name: string) => {
@@ -157,3 +157,4 @@ export interface ReInstallOptions {
     build?: boolean;
     init?: boolean;
 }
+

@@ -1,7 +1,6 @@
 import { exec } from "shelljs";
 import { Identity } from "@dfinity/agent";
 import * as fs from "fs";
-import { Secp256k1KeyIdentity } from "@dfinity/identity";
 import sha256 from "sha256";
 import { principalToAccountIDInBytes, toHexString } from "./utils";
 import { Principal } from "@dfinity/principal";
@@ -14,6 +13,7 @@ import {
 import { ICShowPrincipalInput } from "./types";
 import { identityInitialization } from "./identityInitialization";
 import os from "os";
+import {Secp256k1KeyIdentity} from "@dfinity/identity-secp256k1";
 
 export const getPemPath = (name: string): string => {
     // get current home directory
@@ -160,8 +160,7 @@ export class IdentityFactory {
     };
 
     getAccountIdBytes = (
-        name?: string,
-        index?: number
+        name?: string
     ): Array<number> | undefined => {
         this.ensureIdentityLoaded();
 
