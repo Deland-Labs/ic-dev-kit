@@ -91,7 +91,7 @@
     "typedoc-plugin-mdn-links": "2.0.0",
     "typescript": "4.7.4",
     "util": "0.12.4",
-    "vite": "^4.4.0",
-    "vite-plugin-dts": "^3.0.0"
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.3"
   }
 }
