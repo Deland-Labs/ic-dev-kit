@@ -3,22 +3,19 @@ import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 
 export default defineConfig({
-  plugins: [dts()],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/src/index.ts'),
-      formats: ['es'],
-      fileName: (format) => `${format === 'es' ? 'module' : 'main'}.js`
+      formats: ['es', 'cjs'],
+      fileName: (format) => {
+        return format === 'es' ? 'module.js' : 'main.js';
+      }
     },
     rollupOptions: {
       external: [
-        /^node:.*/,
-        'fs',
-        'path',
         '@dfinity/agent',
         '@dfinity/candid',
         '@dfinity/identity',
-        '@dfinity/identity-secp256k1',
         '@dfinity/principal',
         'archiver',
         'bignumber.js',
@@ -28,11 +25,20 @@ export default defineConfig({
         'lodash',
         'node-color-log',
         'sha256',
-        'shelljs'
+        'shelljs',
+        'text-encoding'
       ]
     },
-    target: 'node16',
-    ssr: true,
-    minify: false
+    sourcemap: true,
+    outDir: 'dist'
+  },
+  plugins: [
+    dts({
+      staticImport: true,
+      insertTypesEntry: true
+    })
+  ],
+  define: {
+    global: 'globalThis'
   }
 });
