@@ -1,8 +1,8 @@
 {
-    "one_way_caller": {
-        "local": ""
-    },
-    "one_way_hoster": {
-        "local": ""
-    }
+  "one_way_caller": {
+    "local": ""
+  },
+  "one_way_hoster": {
+    "local": ""
+  }
 }

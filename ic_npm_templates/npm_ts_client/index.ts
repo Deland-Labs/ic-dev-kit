@@ -1,2 +1,2 @@
-export * from "./interface";
-export { idlFactory, init } from "./idl";
+export * from './interface';
+export { idlFactory, init } from './idl';

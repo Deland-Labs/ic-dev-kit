@@ -3,11 +3,7 @@
     "noImplicitAny": false,
     "target": "ESNext",
     "module": "esnext",
-    "lib": [
-      "dom",
-      "es2017",
-      "es2020.bigint"
-    ],
+    "lib": ["es2017", "es2020.bigint"],
     "allowJs": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
@@ -21,7 +17,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "typedocOptions": {
     "name": "IC Dev Kit",
@@ -30,13 +26,6 @@
     "readme": "./ReadMe.md",
     "out": "docs/"
   },
-  "include": [
-    "src"
- ],
-  "exclude": [
-    "node_modules/**/*",
-    ".webpack/**/*",
-    "_warmup/**/*",
-    ".vscode/**/*"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules/**/*", ".webpack/**/*", "_warmup/**/*", ".vscode/**/*"]
 }

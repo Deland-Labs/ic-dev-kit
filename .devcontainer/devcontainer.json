@@ -8,13 +8,9 @@
       "VARIANT": "bullseye"
     }
   },
-  "runArgs": [
-    "--cap-add=SYS_PTRACE",
-    "--security-opt",
-    "seccomp=unconfined"
-  ],
+  "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
   // "postStartCommand":["bash", "${containerWorkspaceFolder}/sh_post_container_start.sh"],
-  "postCreateCommand":["bash", "${containerWorkspaceFolder}/sh_post_container_created.sh"],
+  "postCreateCommand": ["bash", "${containerWorkspaceFolder}/sh_post_container_created.sh"],
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "lldb.executable": "/usr/bin/lldb",
@@ -29,12 +25,7 @@
     }
   },
   // Add the IDs of extensions you want installed when the container is created.
-  "extensions": [
-    "mutantdino.resourcemonitor",
-    "tamasfe.even-better-toml",
-    "serayuzgur.crates",
-    "github.copilot"
-  ],
+  "extensions": ["mutantdino.resourcemonitor", "tamasfe.even-better-toml", "serayuzgur.crates", "github.copilot"],
   "mounts": [
     "target=${containerWorkspaceFolder}/node_modules,type=volume",
     "target=${containerWorkspaceFolder}/example/node_modules,type=volume",

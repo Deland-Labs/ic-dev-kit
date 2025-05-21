@@ -1,5 +1,5 @@
 {
-    "compilerOptions": {
-        "declaration": true
-    }
+  "compilerOptions": {
+    "declaration": true
+  }
 }

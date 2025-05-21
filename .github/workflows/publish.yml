@@ -28,4 +28,3 @@ jobs:
           yarn install --frozen-lockfile
 
           yarn publish --frozen-lockfile --non-interactive --no-git-tag-version --no-commit-hooks --new-version ${Version} --access public
-
