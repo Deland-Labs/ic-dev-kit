@@ -43,9 +43,7 @@
   },
   "networks": {
     "ic": {
-      "providers": [
-        "https://ic0.app"
-      ],
+      "providers": ["https://ic0.app"],
       "type": "persistent"
     },
     "local": {

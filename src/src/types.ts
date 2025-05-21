@@ -8,34 +8,33 @@ export type PrincipalString = string;
 export type SubAccount = Uint8Array;
 
 export interface ICPackInput {
-    packageScope: string,
-    version: string,
-    canisterEnv?: string,
-    canisterEnvName: string,
-    productionCanisterEnv: string,
-    /**
-     * Publish npm package if true
-     */
-    publish: boolean,
-    /**
-     * Create a zip file when true.
-     */
-    zip: boolean,
+  packageScope: string;
+  version: string;
+  canisterEnv?: string;
+  canisterEnvName: string;
+  productionCanisterEnv: string;
+  /**
+   * Publish npm package if true
+   */
+  publish: boolean;
+  /**
+   * Create a zip file when true.
+   */
+  zip: boolean;
 }
 
 export interface ICGenerateInput {
-    declarationsOutDir: string,
+  declarationsOutDir: string;
 }
 
 export interface ICInitIdentityInput {
-    pemSourceDir: string;
+  pemSourceDir: string;
 }
 
 export interface ICShowPrincipalInput {
-    name?: string;
+  name?: string;
 }
 
 export interface IInstallCanisterInput {
-    name?: string;
+  name?: string;
 }
-

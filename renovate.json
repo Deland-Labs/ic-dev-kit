@@ -1,6 +1,4 @@
 {
   "enabled": false,
-  "extends": [
-    "config:base"
-  ]
+  "extends": ["config:base"]
 }
