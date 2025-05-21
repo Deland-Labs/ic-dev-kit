@@ -2,8 +2,8 @@
   "name": "@delandlabs/ic-dev-kit",
   "version": "2.4.1",
   "description": "",
+  "type": "module",
   "source": "src/src/index.ts",
-  "main": "dist/main.js",
   "module": "dist/module.js",
   "types": "dist/types.d.ts",
   "scripts": {
