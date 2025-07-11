@@ -1,11 +1,12 @@
 import { HttpAgent } from '@dfinity/agent';
 import { identityFactory } from './identity';
 import logger from 'node-color-log';
+
 const defaultIdentity = identityFactory.getIdentity();
 if (defaultIdentity) {
   global.ic = {
     agent: new HttpAgent({
-      host: 'http://127.0.0.1:8000',
+      host: identityFactory.getDefaultHost(), // Use dynamic host detection
       identity: defaultIdentity.identity
     })
   };
