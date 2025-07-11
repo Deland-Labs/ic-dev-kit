@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../dist/module').runCli();
+import('../dist/module.js').then(module => module.runCli());
