@@ -67,19 +67,19 @@ export interface IdentityInfo {
 // Dynamic host detection for pocket-ic compatibility
 const getDynamicHost = (): string => {
   try {
-    // Try to get dfx webserver port dynamically
+    // Get dfx webserver port dynamically
     const result = exec('dfx info webserver-port', { silent: true });
     if (result.code === 0) {
       const port = result.stdout.trim();
+      logger.debug(`Using dfx webserver port: ${port}`);
       return `http://127.0.0.1:${port}`;
+    } else {
+      throw new Error(`dfx info webserver-port failed with code ${result.code}: ${result.stderr}`);
     }
   } catch (error) {
-    // Fallback to checking if dfx is running on standard ports
-    logger.debug('Failed to get dynamic port, using fallback');
+    logger.error('Failed to get dfx webserver port. Ensure dfx is running.');
+    throw new Error(`Cannot determine dfx webserver port: ${error instanceof Error ? error.message : String(error)}`);
   }
-  
-  // Fallback to traditional port 8000
-  return 'http://127.0.0.1:8000';
 };
 
 const DEFAULT_HOST = getDynamicHost();
