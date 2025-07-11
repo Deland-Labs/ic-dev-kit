@@ -1,6 +1,6 @@
 {
   "name": "@delandlabs/ic-dev-kit",
-  "version": "2.4.1",
+  "version": "2.4.2-pocket-ic",
   "description": "",
   "type": "module",
   "source": "src/src/index.ts",
@@ -41,11 +41,11 @@
     "icdev": "./src/entrypoint.js"
   },
   "dependencies": {
-    "@dfinity/agent": ">=2.4.1",
-    "@dfinity/candid": ">=2.4.1",
-    "@dfinity/identity": ">=2.4.1",
+    "@dfinity/agent": "^2.4.1",
+    "@dfinity/candid": "^2.4.1",
+    "@dfinity/identity": "^2.4.1",
     "@dfinity/identity-secp256k1": "^2.4.1",
-    "@dfinity/principal": ">=2.4.1",
+    "@dfinity/principal": "^2.4.1",
     "archiver": "^5.3.1",
     "bignumber.js": "^9.0.2",
     "commander": "^9.2.0",
@@ -58,10 +58,10 @@
   },
   "peerDependencies": {
     "@delandlabs/ic-bin-tools": ">=0.2.0",
-    "@dfinity/agent": ">=2.4.1",
-    "@dfinity/candid": ">=2.4.1",
-    "@dfinity/identity": ">=2.4.1",
-    "@dfinity/principal": ">=2.4.1"
+    "@dfinity/agent": "^2.4.1",
+    "@dfinity/candid": "^2.4.1",
+    "@dfinity/identity": "^2.4.1",
+    "@dfinity/principal": "^2.4.1"
   },
   "devDependencies": {
     "@types/lodash": "4.14.182",

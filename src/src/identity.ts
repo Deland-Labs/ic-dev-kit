@@ -64,7 +64,25 @@ export interface IdentityInfo {
   agentOptions: agentOptions;
 }
 
-const DEFAULT_HOST = 'http://127.0.0.1:8000';
+// Dynamic host detection for pocket-ic compatibility
+const getDynamicHost = (): string => {
+  try {
+    // Get dfx webserver port dynamically
+    const result = exec('dfx info webserver-port', { silent: true });
+    if (result.code === 0) {
+      const port = result.stdout.trim();
+      logger.debug(`Using dfx webserver port: ${port}`);
+      return `http://127.0.0.1:${port}`;
+    } else {
+      throw new Error(`dfx info webserver-port failed with code ${result.code}: ${result.stderr}`);
+    }
+  } catch (error) {
+    logger.error('Failed to get dfx webserver port. Ensure dfx is running.');
+    throw new Error(`Cannot determine dfx webserver port: ${error instanceof Error ? error.message : String(error)}`);
+  }
+};
+
+const DEFAULT_HOST = getDynamicHost();
 
 export class IdentityFactory {
   private _identities: Map<string, IdentityInfo>;
