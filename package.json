@@ -11,7 +11,8 @@
     ".": {
       "import": "./dist/module.js",
       "require": "./dist/commonjs-package/src/src/index.js",
-      "types": "./dist/types.d.ts"
+      "types": "./dist/types.d.ts",
+      "default": "./dist/module.js"
     }
   },
   "scripts": {
