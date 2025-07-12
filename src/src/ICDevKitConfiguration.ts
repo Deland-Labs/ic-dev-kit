@@ -12,7 +12,7 @@ export interface ICDevKitConfigurationIdentitySection {
 }
 
 export interface ICDevKitConfigurationCanisterSectionItem {
-  /// canister package to be install. e.g. @deland-labs/ic_ledger_server
+  /// canister package to be install. e.g. @delandlabs/ic_ledger_server
   package: string;
   install: { command: string } | { parameter: object };
 }

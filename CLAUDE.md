@@ -112,7 +112,7 @@ Standard dfx configuration file that ic-dev-kit reads to:
 - Can publish to npm registry with version management
 
 ### Third-party Canister Integration
-- Install pre-built canisters from npm packages (e.g., `@deland-labs/ic_ledger_server`)
+- Install pre-built canisters from npm packages (e.g., `@delandlabs/ic_ledger_server`)
 - Configure installation parameters in `ic-dev-kit.json`
 - Supports both custom command and parameter-based installation
 

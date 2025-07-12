@@ -5,7 +5,7 @@
   },
   "install_canisters": {
     "ledger": {
-      "package": "@deland-labs/ic_ledger_server",
+      "package": "@delandlabs/ic_ledger_server",
       "install": {
         "parameter": {
           "send_whitelist": [],
@@ -20,7 +20,7 @@
       }
     },
     "token1": {
-      "package": "@deland-labs/dft_all_features_server",
+      "package": "@delandlabs/dft_all_features_server",
       "install": {
         "parameter": {
           "name": "Token1",
@@ -36,7 +36,7 @@
       }
     },
     "token2": {
-      "package": "@deland-labs/dft_basic_server",
+      "package": "@delandlabs/dft_basic_server",
       "install": {
         "parameter": {
           "name": "Token2",
@@ -52,7 +52,7 @@
       }
     },
     "token3": {
-      "package": "@deland-labs/dft_burnable_server",
+      "package": "@delandlabs/dft_burnable_server",
       "install": {
         "parameter": {
           "name": "Token3",
@@ -68,7 +68,7 @@
       }
     },
     "token4": {
-      "package": "@deland-labs/dft_mintable_server",
+      "package": "@delandlabs/dft_mintable_server",
       "install": {
         "parameter": {
           "name": "Token4",
