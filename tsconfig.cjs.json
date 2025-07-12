@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2020",
+    "outDir": "./dist/commonjs-package",
+    "declaration": true,
+    "declarationDir": "./dist/commonjs-package",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    ".webpack/**/*", 
+    "_warmup/**/*",
+    ".vscode/**/*",
+    "dist/**/*"
+  ]
+}
