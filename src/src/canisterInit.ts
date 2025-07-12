@@ -159,9 +159,9 @@ export const parseDFTInit = (input: DFTInitParameter): ArrayBuffer => {
 };
 
 export const buildInCanisterParameterParser = {
-  '@deland-labs/ic_ledger_server': parseICLedgerInit,
-  '@deland-labs/dft_all_features_server': parseDFTInit,
-  '@deland-labs/dft_basic_server': parseDFTInit,
-  '@deland-labs/dft_burnable_server': parseDFTInit,
-  '@deland-labs/dft_mintable_server': parseDFTInit
+  '@delandlabs/ic_ledger_server': parseICLedgerInit,
+  '@delandlabs/dft_all_features_server': parseDFTInit,
+  '@delandlabs/dft_basic_server': parseDFTInit,
+  '@delandlabs/dft_burnable_server': parseDFTInit,
+  '@delandlabs/dft_mintable_server': parseDFTInit
 };
