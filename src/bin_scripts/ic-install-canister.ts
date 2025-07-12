@@ -1,6 +1,7 @@
 import fs from 'fs';
 import logger from 'node-color-log';
-import { exec } from 'shelljs';
+import shelljs from 'shelljs';
+const { exec } = shelljs;
 import { icDevKitConfiguration, ICDevKitConfigurationCanisterSectionItem } from '../src/ICDevKitConfiguration';
 import { IInstallCanisterInput } from '../src/types';
 import * as canister from '../src/canister';

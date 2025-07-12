@@ -1,5 +1,6 @@
 import fs from 'fs';
-import { merge } from 'lodash';
+import lodash from 'lodash';
+const { merge } = lodash;
 import logger from 'node-color-log';
 export const IC_DEV_KIT_CONFIGURATION_FILE_NAME = 'ic-dev-kit.json';
 export const DEFAULT_PEM_SOURCE_DIR = './ic-dev-kit/pem/';

@@ -1,4 +1,5 @@
-import { exec } from 'shelljs';
+import shelljs from 'shelljs';
+const { exec } = shelljs;
 import fs from 'fs';
 import logger from 'node-color-log';
 import * as dfxJsonManager from '../src/dfxJson';
