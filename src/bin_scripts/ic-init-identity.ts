@@ -2,16 +2,15 @@ import * as canister from '../src/canister';
 import logger from 'node-color-log';
 import { identityInitialization } from '../src/identityInitialization';
 
-export const execute_task_init_identity = () => {
+export const execute_task_init_identity = async () => {
   identityInitialization.initAllIdentities();
   // identities.json written to disk
   logger.debug('Identities created');
 
-  require('../src/setupGlobalAgent');
+  await import('../src/setupGlobalAgent');
   canister.createAll();
-  canister.addMainAsController().then(() => {
-    logger.info('Main controller added');
-  });
+  await canister.addMainAsController();
+  logger.info('Main controller added');
 
   logger.info('execute_task_init_identity done');
 };

@@ -9,7 +9,8 @@ import {
 } from '../src/dfxJson';
 import * as canister from '../src/canister';
 import logger from 'node-color-log';
-import { exec } from 'shelljs';
+import shelljs from 'shelljs';
+const { exec } = shelljs;
 import { ICPackInput } from '../src/types';
 
 const package_dir = 'package';

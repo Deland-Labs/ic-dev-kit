@@ -1,6 +1,7 @@
-import { exec } from 'shelljs';
+import shelljs from 'shelljs';
+const { exec } = shelljs;
 import { Identity } from '@dfinity/agent';
-import * as fs from 'fs';
+import fs from 'fs';
 import sha256 from 'sha256';
 import { principalToAccountIDInBytes, toHexString } from './utils';
 import { Principal } from '@dfinity/principal';

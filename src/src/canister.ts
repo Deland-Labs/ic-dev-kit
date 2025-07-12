@@ -1,7 +1,8 @@
-import { exec } from 'shelljs';
+import shelljs from 'shelljs';
+const { exec } = shelljs;
 import { Actor, HttpAgent } from '@dfinity/agent';
 import { DfxJsonCanister, get_dfx_json, get_wasm_path } from './dfxJson';
-import * as fs from 'fs';
+import fs from 'fs';
 import { identityFactory } from './identity';
 import logger from 'node-color-log';
 import { Principal } from '@dfinity/principal';

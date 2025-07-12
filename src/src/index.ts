@@ -44,6 +44,6 @@ export const tasks = {
   ...icUpdateDid
 };
 
-export const runCli = () => {
-  require('../icdev');
+export const runCli = async () => {
+  await import('../icdev');
 };

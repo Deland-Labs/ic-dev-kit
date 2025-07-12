@@ -1,5 +1,6 @@
-import { exec } from 'shelljs';
-import * as fs from 'fs';
+import shelljs from 'shelljs';
+const { exec } = shelljs;
+import fs from 'fs';
 import logger from 'node-color-log';
 import {
   DEFAULT_IDENTITY_NAME,
