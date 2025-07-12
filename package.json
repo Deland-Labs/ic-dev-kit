@@ -1,14 +1,24 @@
 {
   "name": "@delandlabs/ic-dev-kit",
-  "version": "2.4.2-pocket-ic",
+  "version": "2.4.2-commonjs-compat",
   "description": "",
   "type": "module",
   "source": "src/src/index.ts",
+  "main": "dist/commonjs-package/src/src/index.js",
   "module": "dist/module.js",
   "types": "dist/types.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/module.js",
+      "require": "./dist/commonjs-package/src/src/index.js",
+      "types": "./dist/types.d.ts"
+    }
+  },
   "scripts": {
     "test": "lint-staged",
-    "pack-dist": "rm -rf dist/ && vite build",
+    "pack-dist": "rm -rf dist/ && npm run build:esm && npm run build:cjs",
+    "build:esm": "vite build",
+    "build:cjs": "tsc --project tsconfig.cjs.json && echo '{\"type\": \"commonjs\"}' > dist/commonjs-package/package.json",
     "pack-docs": "rm -rf docs/  && typedoc src/src/",
     "build": "npm run pack-dist",
     "prepublishOnly": "npm test  &&  npm run build",
