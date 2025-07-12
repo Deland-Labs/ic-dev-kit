@@ -21,8 +21,7 @@ export const execute_task_generate = async (input: ICGenerateInput) => {
   const outDir = input.declarationsOutDir;
   fs.mkdirSync(outDir, { recursive: true });
 
-  // remove ./src/declarations/*/index.js
-  await exec(`rm -rf ./src/declarations/*/index.js`);
+  // Keep index.js files for proper module exports
   // copy files from ./src/declarations/* to outDir
   await exec(`cp -r ./src/declarations/* ${outDir}`);
 
