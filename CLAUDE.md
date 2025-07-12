@@ -132,3 +132,23 @@ Standard dfx configuration file that ic-dev-kit reads to:
 - Vite-based build system for library distribution
 - External dependencies marked to avoid bundling
 - TypeDoc integration for documentation generation
+
+## Development Guidelines
+
+### Pull Request Requirements
+- **Never commit directly to main branch** - Always create a feature branch and submit a PR
+- Use conventional commit messages (e.g., `fix:`, `feat:`, `chore:`, `ci:`)
+- Ensure all CI checks pass before merging
+- Update yarn.lock when dependencies change
+- Test changes locally before submitting PR
+
+### ES Module Compatibility
+When working with CommonJS dependencies in this ES module project:
+- Use default imports for CommonJS modules: `import pkg from 'package'; const { method } = pkg;`
+- Replace `require()` with dynamic `import()`
+- Add Node.js built-ins to Vite externals if needed
+
+### CI/CD
+- GitHub Actions runs on Node.js 18 (required for shelljs@0.10.0+)
+- Build workflow triggers on push to main and PR events
+- Public repository - CI is free and should remain enabled
