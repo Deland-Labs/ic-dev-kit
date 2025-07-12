@@ -86,7 +86,7 @@
     "lint-staged": "13.0.3",
     "open-cli": "7.0.1",
     "prettier": "^3.5.3",
-    "rimraf": "^6.0.1",
+    "rimraf": "^5.0.10",
     "ts-jest": "28.0.7",
     "typedoc": "0.23.8",
     "typedoc-plugin-mdn-links": "2.0.0",
