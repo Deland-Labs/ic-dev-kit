@@ -1,6 +1,6 @@
 {
   "name": "@delandlabs/ic-dev-kit",
-  "version": "2.4.2-commonjs-compat",
+  "version": "2.4.3",
   "description": "",
   "type": "module",
   "source": "src/src/index.ts",
